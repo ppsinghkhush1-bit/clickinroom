@@ -1,4 +1,4 @@
-import { Facebook, Instagram, Twitter, Linkedin, Youtube, Mail, Phone, MapPin, ArrowUp } from 'lucide-react';
+import { Facebook, Instagram, Linkedin, Youtube, Mail, Phone, MapPin, ArrowUp } from 'lucide-react';
 
 const Footer = () => {
   const scrollToTop = () => {
@@ -11,8 +11,10 @@ const Footer = () => {
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+          
+          {/* Brand Column */}
           <div>
-            <div className="flex items-center space-x-2 mb-6">
+            <div className="flex items-center space-x-3 mb-6">
               <div className="w-12 h-12 rounded-lg overflow-hidden flex items-center justify-center shadow-lg bg-white/10">
                 <img 
                   src="/click in rrom.png" 
@@ -29,105 +31,48 @@ const Footer = () => {
               India's premier hospitality digital solutions provider, transforming hotels into digital success stories.
             </p>
             <div className="flex items-center space-x-4">
-              <a
-                href="#"
-                className="w-10 h-10 glass-morphism rounded-lg flex items-center justify-center hover:bg-yellow-400/20 transition-all group"
-              >
+              <a href="#" className="w-10 h-10 glass-morphism rounded-lg flex items-center justify-center hover:bg-yellow-400/20 transition-all group">
                 <Facebook className="w-5 h-5 text-gray-400 group-hover:text-yellow-400" />
               </a>
-              <a
-                href="#"
-                className="w-10 h-10 glass-morphism rounded-lg flex items-center justify-center hover:bg-yellow-400/20 transition-all group"
-              >
+              <a href="#" className="w-10 h-10 glass-morphism rounded-lg flex items-center justify-center hover:bg-yellow-400/20 transition-all group">
                 <Instagram className="w-5 h-5 text-gray-400 group-hover:text-yellow-400" />
               </a>
-              <a
-                href="#"
-                className="w-10 h-10 glass-morphism rounded-lg flex items-center justify-center hover:bg-yellow-400/20 transition-all group"
-              >
+              <a href="#" className="w-10 h-10 glass-morphism rounded-lg flex items-center justify-center hover:bg-yellow-400/20 transition-all group">
                 <Linkedin className="w-5 h-5 text-gray-400 group-hover:text-yellow-400" />
               </a>
-              <a
-                href="#"
-                className="w-10 h-10 glass-morphism rounded-lg flex items-center justify-center hover:bg-yellow-400/20 transition-all group"
-              >
+              <a href="#" className="w-10 h-10 glass-morphism rounded-lg flex items-center justify-center hover:bg-yellow-400/20 transition-all group">
                 <Youtube className="w-5 h-5 text-gray-400 group-hover:text-yellow-400" />
               </a>
             </div>
           </div>
 
+          {/* Quick Links Column */}
           <div>
             <h3 className="text-white font-bold text-lg mb-6">Quick Links</h3>
             <ul className="space-y-3">
-              <li>
-                <a href="#about" className="text-gray-400 hover:text-yellow-400 transition-colors">
-                  About Us
-                </a>
-              </li>
-              <li>
-                <a href="#services" className="text-gray-400 hover:text-yellow-400 transition-colors">
-                  Our Services
-                </a>
-              </li>
-              <li>
-                <a href="#rooms" className="text-gray-400 hover:text-yellow-400 transition-colors">
-                  Accommodations
-                </a>
-              </li>
-              <li>
-                <a href="#gallery" className="text-gray-400 hover:text-yellow-400 transition-colors">
-                  Gallery
-                </a>
-              </li>
-              <li>
-                <a href="#testimonials" className="text-gray-400 hover:text-yellow-400 transition-colors">
-                  Reviews
-                </a>
-              </li>
-              <li>
-                <a href="#contact" className="text-gray-400 hover:text-yellow-400 transition-colors">
-                  Contact Us
-                </a>
-              </li>
+              <li><a href="#about" className="text-gray-400 hover:text-yellow-400 transition-colors">About Us</a></li>
+              <li><a href="#services" className="text-gray-400 hover:text-yellow-400 transition-colors">Our Services</a></li>
+              <li><a href="#rooms" className="text-gray-400 hover:text-yellow-400 transition-colors">Accommodations</a></li>
+              <li><a href="#gallery" className="text-gray-400 hover:text-yellow-400 transition-colors">Gallery</a></li>
+              <li><a href="#testimonials" className="text-gray-400 hover:text-yellow-400 transition-colors">Reviews</a></li>
+              <li><a href="#contact" className="text-gray-400 hover:text-yellow-400 transition-colors">Contact Us</a></li>
             </ul>
           </div>
 
+          {/* Services Column */}
           <div>
             <h3 className="text-white font-bold text-lg mb-6">Services</h3>
             <ul className="space-y-3">
-              <li>
-                <a href="#services" className="text-gray-400 hover:text-yellow-400 transition-colors">
-                  Website Development
-                </a>
-              </li>
-              <li>
-                <a href="#services" className="text-gray-400 hover:text-yellow-400 transition-colors">
-                  SEO & Marketing
-                </a>
-              </li>
-              <li>
-                <a href="#services" className="text-gray-400 hover:text-yellow-400 transition-colors">
-                  Social Media
-                </a>
-              </li>
-              <li>
-                <a href="#services" className="text-gray-400 hover:text-yellow-400 transition-colors">
-                  Hotel Photography
-                </a>
-              </li>
-              <li>
-                <a href="#services" className="text-gray-400 hover:text-yellow-400 transition-colors">
-                  Reputation Management
-                </a>
-              </li>
-              <li>
-                <a href="#services" className="text-gray-400 hover:text-yellow-400 transition-colors">
-                  Booking Engine
-                </a>
-              </li>
+              <li><a href="#services" className="text-gray-400 hover:text-yellow-400 transition-colors">Website Development</a></li>
+              <li><a href="#services" className="text-gray-400 hover:text-yellow-400 transition-colors">SEO & Marketing</a></li>
+              <li><a href="#services" className="text-gray-400 hover:text-yellow-400 transition-colors">Social Media</a></li>
+              <li><a href="#services" className="text-gray-400 hover:text-yellow-400 transition-colors">Hotel Photography</a></li>
+              <li><a href="#services" className="text-gray-400 hover:text-yellow-400 transition-colors">Reputation Management</a></li>
+              <li><a href="#services" className="text-gray-400 hover:text-yellow-400 transition-colors">Booking Engine</a></li>
             </ul>
           </div>
 
+          {/* Contact Column */}
           <div>
             <h3 className="text-white font-bold text-lg mb-6">Get In Touch</h3>
             <ul className="space-y-4">
@@ -153,26 +98,22 @@ const Footer = () => {
           </div>
         </div>
 
+        {/* Bottom Bar */}
         <div className="border-t border-gray-800 pt-8">
           <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
             <p className="text-gray-400 text-sm text-center md:text-left">
               © 2026 ClickInRoom. All rights reserved. | Designed with excellence
             </p>
             <div className="flex items-center space-x-6 text-sm">
-              <a href="#" className="text-gray-400 hover:text-yellow-400 transition-colors">
-                Privacy Policy
-              </a>
-              <a href="#" className="text-gray-400 hover:text-yellow-400 transition-colors">
-                Terms of Service
-              </a>
-              <a href="#" className="text-gray-400 hover:text-yellow-400 transition-colors">
-                Sitemap
-              </a>
+              <a href="#" className="text-gray-400 hover:text-yellow-400 transition-colors">Privacy Policy</a>
+              <a href="#" className="text-gray-400 hover:text-yellow-400 transition-colors">Terms of Service</a>
+              <a href="#" className="text-gray-400 hover:text-yellow-400 transition-colors">Sitemap</a>
             </div>
           </div>
         </div>
       </div>
 
+      {/* Scroll to Top Button */}
       <button
         onClick={scrollToTop}
         className="fixed bottom-8 right-8 p-4 bg-gradient-to-r from-yellow-400 to-amber-600 rounded-full shadow-2xl hover:scale-110 transition-all duration-300 z-50"
