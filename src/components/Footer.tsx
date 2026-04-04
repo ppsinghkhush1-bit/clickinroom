@@ -20,11 +20,6 @@ const Footer = () => {
                   src="/logo.png" 
                   alt="ClickInRoom Logo" 
                   className="w-full h-full object-contain"
-                  // Fallback: If image fails to load, hide it so the background or text looks okay
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.style.display = 'none';
-                  }}
                 />
               </div>
               <div className="flex flex-col">
