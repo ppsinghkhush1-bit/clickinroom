@@ -39,8 +39,7 @@ const Hero = () => {
 
         {/* Subheading */}
         <p className="text-lg md:text-xl text-gray-300 mb-10 max-w-3xl mx-auto leading-relaxed font-light">
-          We blend luxury aesthetics with data-driven strategies to increase direct bookings, 
-          enhance guest experiences, and maximize your revenue.
+          We combine beautiful design with smart strategies to help your hotel get more direct bookings, better guest experiences, and higher revenue.
         </p>
 
         {/* CTA Buttons */}
