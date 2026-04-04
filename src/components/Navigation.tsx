@@ -86,7 +86,7 @@ const Navigation = ({ scrolled }: NavigationProps) => {
               </a>
             ))}
             <div className="pt-4 space-y-2">
-              <a href="tel:+919876543210" className="flex items-center px-4 py-2 text-gray-300">
+              <a href="tel:+917508639613" className="flex items-center px-4 py-2 text-gray-300">
                 <Phone className="w-4 h-4 mr-2" />
                 <span>+91 75086 39613</span>
               </a>
