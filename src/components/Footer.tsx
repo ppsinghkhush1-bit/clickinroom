@@ -19,7 +19,7 @@ const Footer = () => {
               <img 
                 src="/logo.png" 
                 alt="ClickInRoom Logo" 
-                className="h-12 w-auto object-contain" // Adjusted height to match text size
+                className="h-20 w-auto object-contain" // Adjusted height to match text size
                 onError={(e) => {
                   const target = e.target as HTMLImageElement;
                   target.style.display = 'none';
