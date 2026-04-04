@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Send, Phone, Mail, MapPin, CheckCircle, Loader2 } from 'lucide-react';
-import emailjs from '@emailjs/browser';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -19,30 +18,13 @@ const Contact = () => {
     e.preventDefault();
     setIsSending(true);
 
-    // EmailJS Configuration using Vite Environment Variables
-    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
-    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
-
-    if (!serviceId || !templateId || !publicKey) {
-      console.error('Missing EmailJS credentials in .env file');
-      alert('Configuration error: Missing EmailJS credentials. Please check your .env file.');
-      setIsSending(false);
-      return;
-    }
-
-    const templateParams = {
-      from_name: formData.name,
-      from_email: formData.email,
-      phone: formData.phone,
-      hotel_name: formData.hotelName,
-      service: formData.service,
-      message: formData.message,
-    };
-
+    // Simulating a server request (1.5 seconds delay)
+    // You can replace this with your actual API call later
     try {
-      const response = await emailjs.send(serviceId, templateId, templateParams, publicKey);
-      console.log('SUCCESS!', response.status, response.text);
+      console.log('Form Data Submitted:', formData);
+      
+      await new Promise(resolve => setTimeout(resolve, 1500));
+
       setSubmitted(true);
       
       setTimeout(() => {
@@ -58,7 +40,7 @@ const Contact = () => {
       }, 3000);
     } catch (err) {
       console.error('FAILED...', err);
-      alert('Failed to send the message. Please check your connection and try again.');
+      alert('Failed to send the message. Please try again.');
     } finally {
       setIsSending(false);
     }
