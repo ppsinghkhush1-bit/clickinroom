@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Bed, Users, Maximize, Star, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom'; // Import Link for navigation
 
 const Rooms = () => {
   const [filter, setFilter] = useState('all');
@@ -173,10 +174,15 @@ const Rooms = () => {
                     <div className="text-sm text-gray-400">Starting from</div>
                     <div className="text-2xl font-bold text-gradient">{room.price}</div>
                   </div>
-                  <button className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-yellow-400 to-amber-600 text-black font-semibold rounded-lg hover:shadow-xl transition-all">
+                  
+                  {/* Updated Button to Link */}
+                  <Link 
+                    to="/booking" 
+                    className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-yellow-400 to-amber-600 text-black font-semibold rounded-lg hover:shadow-xl transition-all"
+                  >
                     <span>Book Now</span>
                     <ArrowRight className="w-4 h-4" />
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>
