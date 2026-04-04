@@ -13,8 +13,12 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           <div>
             <div className="flex items-center space-x-2 mb-6">
-              <div className="w-12 h-12 bg-gradient-to-br from-yellow-400 to-amber-600 rounded-lg flex items-center justify-center shadow-lg">
-                <span className="text-2xl font-bold text-black">C</span>
+              <div className="w-12 h-12 rounded-lg overflow-hidden flex items-center justify-center shadow-lg bg-white/10">
+                <img 
+                  src="/click in rrom.png" 
+                  alt="ClickInRoom Logo" 
+                  className="w-full h-full object-contain"
+                />
               </div>
               <div className="flex flex-col">
                 <span className="text-gradient text-xl font-bold tracking-wider">ClickInRoom</span>
