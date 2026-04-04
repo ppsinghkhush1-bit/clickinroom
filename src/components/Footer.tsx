@@ -41,12 +41,6 @@ const Footer = () => {
                 href="#"
                 className="w-10 h-10 glass-morphism rounded-lg flex items-center justify-center hover:bg-yellow-400/20 transition-all group"
               >
-                <Twitter className="w-5 h-5 text-gray-400 group-hover:text-yellow-400" />
-              </a>
-              <a
-                href="#"
-                className="w-10 h-10 glass-morphism rounded-lg flex items-center justify-center hover:bg-yellow-400/20 transition-all group"
-              >
                 <Linkedin className="w-5 h-5 text-gray-400 group-hover:text-yellow-400" />
               </a>
               <a
@@ -83,7 +77,7 @@ const Footer = () => {
               </li>
               <li>
                 <a href="#testimonials" className="text-gray-400 hover:text-yellow-400 transition-colors">
-                  Testimonials
+                  Reviews
                 </a>
               </li>
               <li>
@@ -141,14 +135,14 @@ const Footer = () => {
               </li>
               <li className="flex items-center space-x-3">
                 <Phone className="w-5 h-5 text-yellow-400 flex-shrink-0" />
-                <a href="tel:+919876543210" className="text-gray-400 hover:text-yellow-400 transition-colors">
-                  +91 98765 43210
+                <a href="tel:+917508639613" className="text-gray-400 hover:text-yellow-400 transition-colors">
+                  +91 75086 39613
                 </a>
               </li>
               <li className="flex items-center space-x-3">
                 <Mail className="w-5 h-5 text-yellow-400 flex-shrink-0" />
                 <a href="mailto:contact@clickinroom.com" className="text-gray-400 hover:text-yellow-400 transition-colors">
-                  contact@clickinroom.com
+                  support.clickinroom@gmail.com
                 </a>
               </li>
             </ul>
@@ -158,7 +152,7 @@ const Footer = () => {
         <div className="border-t border-gray-800 pt-8">
           <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
             <p className="text-gray-400 text-sm text-center md:text-left">
-              © 2024 ClickInRoom. All rights reserved. | Designed with excellence
+              © 2026 ClickInRoom. All rights reserved. | Designed with excellence
             </p>
             <div className="flex items-center space-x-6 text-sm">
               <a href="#" className="text-gray-400 hover:text-yellow-400 transition-colors">
