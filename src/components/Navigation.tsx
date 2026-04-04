@@ -14,7 +14,7 @@ const Navigation = ({ scrolled }: NavigationProps) => {
     { name: 'Services', href: '#services' },
     { name: 'Rooms', href: '#rooms' },
     { name: 'Gallery', href: '#gallery' },
-    { name: 'Testimonials', href: '#testimonials' },
+    { name: 'Review', href: '#testimonials' },
     { name: 'Contact', href: '#contact' },
   ];
 
