@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, FormEvent, ChangeEvent } from 'react';
 import { Bed, Users, Maximize, Star, ArrowRight, X, Send } from 'lucide-react';
 
 // Define the Room interface
@@ -116,26 +116,22 @@ const Rooms = () => {
 
   const filteredRooms = filter === 'all' ? rooms : rooms.filter(room => room.category === filter);
 
-  // Open Modal and set selected room
   const handleBookNow = (room: Room) => {
     setSelectedRoom(room);
     setFormData(prev => ({ ...prev, roomName: room.name }));
     setIsModalOpen(true);
   };
 
-  // Handle input changes
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  // Handle form submission
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     console.log('Booking Request:', formData);
     alert(`Thank you! Your request for ${formData.roomName} has been received.`);
     setIsModalOpen(false);
-    // Reset form
     setFormData({ name: '', email: '', phone: '', hotelName: '', roomName: '', message: '' });
   };
 
@@ -232,7 +228,6 @@ const Rooms = () => {
                       <div className="text-2xl font-bold text-gradient">{room.price}</div>
                     </div>
                     
-                    {/* Updated Button to open Modal */}
                     <button 
                       onClick={() => handleBookNow(room)}
                       className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-yellow-400 to-amber-600 text-black font-semibold rounded-lg hover:shadow-xl transition-all"
@@ -255,7 +250,6 @@ const Rooms = () => {
             className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto glass-morphism rounded-2xl p-8 shadow-2xl"
             onClick={(e) => e.stopPropagation()} 
           >
-            {/* Close Button */}
             <button 
               onClick={() => setIsModalOpen(false)}
               className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
@@ -263,16 +257,13 @@ const Rooms = () => {
               <X className="w-6 h-6" />
             </button>
 
-            {/* Modal Header */}
             <div className="text-center mb-8">
               <h3 className="text-3xl font-bold text-white mb-2">Book Your Stay</h3>
               <p className="text-gray-400">Fill in your details for <span className="text-yellow-400 font-semibold">{selectedRoom?.name}</span></p>
             </div>
 
-            {/* Form */}
             <form onSubmit={handleSubmit} className="space-y-5">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                {/* Name */}
                 <div>
                   <label className="block text-gray-300 mb-2 text-sm font-medium">Your Name *</label>
                   <input
@@ -286,7 +277,6 @@ const Rooms = () => {
                   />
                 </div>
 
-                {/* Email */}
                 <div>
                   <label className="block text-gray-300 mb-2 text-sm font-medium">Email Address *</label>
                   <input
@@ -302,7 +292,6 @@ const Rooms = () => {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                {/* Phone */}
                 <div>
                   <label className="block text-gray-300 mb-2 text-sm font-medium">Phone Number *</label>
                   <input
@@ -316,7 +305,6 @@ const Rooms = () => {
                   />
                 </div>
 
-                {/* Hotel Name */}
                 <div>
                   <label className="block text-gray-300 mb-2 text-sm font-medium">Hotel Name</label>
                   <input
@@ -330,7 +318,6 @@ const Rooms = () => {
                 </div>
               </div>
 
-              {/* Room Name (Read Only) */}
               <div>
                 <label className="block text-gray-300 mb-2 text-sm font-medium">Room Selected</label>
                 <input
@@ -342,7 +329,6 @@ const Rooms = () => {
                 />
               </div>
 
-              {/* Message */}
               <div>
                 <label className="block text-gray-300 mb-2 text-sm font-medium">Message</label>
                 <textarea
@@ -355,7 +341,6 @@ const Rooms = () => {
                 ></textarea>
               </div>
 
-              {/* Submit Button */}
               <button
                 type="submit"
                 className="w-full flex items-center justify-center space-x-2 px-8 py-4 bg-gradient-to-r from-yellow-400 to-amber-600 text-black font-bold rounded-lg hover:shadow-2xl hover:scale-105 transition-all duration-300"
