@@ -34,7 +34,7 @@ const Navigation = ({ scrolled }: NavigationProps) => {
             </div>
             <div className="flex flex-col">
               <span className="text-gradient text-xl font-bold tracking-wider">ClickInRoom</span>
-              <span className="text-xs text-gray-400">clickinroom.com</span>
+              <span className="text-xs text-gray-400">Digital Marketing Agency, Ludhiana</span>
             </div>
           </div>
 
@@ -53,7 +53,7 @@ const Navigation = ({ scrolled }: NavigationProps) => {
           <div className="hidden md:flex items-center space-x-4">
             <a href="tel:+919876543210" className="flex items-center text-sm text-gray-300 hover:text-yellow-400 transition">
               <Phone className="w-4 h-4 mr-2" />
-              <span>+91 98765 43210</span>
+              <span>+91 75086 39613</span>
             </a>
             <a
               href="#contact"
@@ -88,7 +88,7 @@ const Navigation = ({ scrolled }: NavigationProps) => {
             <div className="pt-4 space-y-2">
               <a href="tel:+919876543210" className="flex items-center px-4 py-2 text-gray-300">
                 <Phone className="w-4 h-4 mr-2" />
-                <span>+91 98765 43210</span>
+                <span>+91 75086 39613</span>
               </a>
               <a
                 href="#contact"
