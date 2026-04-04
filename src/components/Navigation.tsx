@@ -29,12 +29,16 @@ const Navigation = ({ scrolled }: NavigationProps) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           <div className="flex items-center space-x-2">
-            <div className="w-12 h-12 bg-gradient-to-br from-yellow-400 to-amber-600 rounded-lg flex items-center justify-center shadow-lg">
+             <div className="flex items-center space-x-4 mb-6">
               <img 
-                  src="/logo.png" 
-                  alt="ClickInRoom Logo" 
-                  className="w-full h-full object-contain"
-                />
+                src="/logo.png" 
+                alt="ClickInRoom Logo" 
+                className="h-20 w-auto object-contain" // Adjusted height to match text size
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.style.display = 'none';
+                }}
+              />
             </div>
             <div className="flex flex-col">
               <span className="text-gradient text-xl font-bold tracking-wider">ClickInRoom</span>
