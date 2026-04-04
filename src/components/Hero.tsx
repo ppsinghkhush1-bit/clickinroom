@@ -30,10 +30,10 @@ const Hero = () => {
 
         {/* Main Heading */}
         <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight tracking-tight">
-          <span className="text-white">Transforming Hotels Into</span>
+          <span className="text-white">Your Hotel, Now Trending</span>
           <br />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500">
-            Digital Landmarks
+            Everywhere
           </span>
         </h1>
 
