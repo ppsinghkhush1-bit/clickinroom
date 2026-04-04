@@ -1,44 +1,39 @@
-import { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, Star, Quote } from 'lucide-react';
+import { useState, useEffect } from "react";
+import { ChevronLeft, ChevronRight, Star, Quote } from "lucide-react";
 
 const Testimonials = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const testimonials = [
     {
-      name: 'Rajesh Mehta',
-      role: 'General Manager, The Grand Palace Hotel',
-      image: 'https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=200',
+      name: "Rahul Gupta",
+      role: "Owner, Jaipur Heritage Hotel",
       rating: 5,
-      text: 'ClickInRoom transformed our digital presence completely. Within 3 months, we saw a 150% increase in direct bookings. Their team understands hospitality like no other agency.',
+      text: "ClickInRoom helped us increase our direct bookings within a few months. Their team understands the Indian hotel market very well.",
     },
     {
-      name: 'Priya Sharma',
-      role: 'Owner, Serenity Beach Resort',
-      image: 'https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg?auto=compress&cs=tinysrgb&w=200',
+      name: "Anita Kapoor",
+      role: "Manager, Goa Beach Stay",
       rating: 5,
-      text: 'The website they built for us is absolutely stunning. Our guests constantly compliment it. The booking engine works flawlessly and has reduced our OTA dependency by 40%.',
+      text: "Our new website looks amazing and works perfectly for bookings. We are getting more guests directly from Google.",
     },
     {
-      name: 'Amit Verma',
-      role: 'Marketing Head, Luxury Hotels Group',
-      image: 'https://images.pexels.com/photos/1516680/pexels-photo-1516680.jpeg?auto=compress&cs=tinysrgb&w=200',
+      name: "Sandeep Malhotra",
+      role: "Director, Delhi City Hotel",
       rating: 5,
-      text: 'Professional, responsive, and results-driven. ClickInRoom\'s SEO and digital marketing strategies have positioned our properties at the top of search results. Highly recommended!',
+      text: "Professional team with great digital marketing skills. Our hotel visibility online has improved a lot.",
     },
     {
-      name: 'Kavita Desai',
-      role: 'Director, Heritage Boutique Hotels',
-      image: 'https://images.pexels.com/photos/1181424/pexels-photo-1181424.jpeg?auto=compress&cs=tinysrgb&w=200',
+      name: "Vikas Sharma",
+      role: "Owner, Shimla Mountain Retreat",
       rating: 5,
-      text: 'Their hotel photography service is exceptional. The images capture the essence of our properties perfectly. Combined with their social media marketing, our brand visibility has skyrocketed.',
+      text: "They helped us reduce OTA dependency and get more direct bookings from our website.",
     },
     {
-      name: 'Vikram Singh',
-      role: 'CEO, Royal Resorts & Spa',
-      image: 'https://images.pexels.com/photos/1212984/pexels-photo-1212984.jpeg?auto=compress&cs=tinysrgb&w=200',
+      name: "Neha Patel",
+      role: "Marketing Head, Ahmedabad Boutique Hotel",
       rating: 5,
-      text: 'From pre-launch marketing to ongoing reputation management, ClickInRoom has been instrumental in our success. Their holistic approach delivers measurable ROI.',
+      text: "Their SEO and marketing strategies helped our hotel appear higher in search results and attract more guests.",
     },
   ];
 
@@ -67,18 +62,18 @@ const Testimonials = () => {
         <div className="text-center mb-12">
           <div className="inline-block mb-4">
             <span className="px-4 py-2 bg-yellow-400/10 border border-yellow-400/30 rounded-full text-yellow-400 text-sm font-semibold">
-              Client Success Stories
+              Client Reviews
             </span>
           </div>
 
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
             <span className="text-white">Trusted by</span>
             <br />
-            <span className="text-gradient">India's Leading Hotels</span>
+            <span className="text-gradient">Hotels Across India</span>
           </h2>
 
           <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-            Don't just take our word for it - hear from our satisfied clients
+            Real feedback from hotel owners and managers we work with
           </p>
         </div>
 
@@ -88,7 +83,10 @@ const Testimonials = () => {
 
             <div className="flex items-center mb-6">
               {[...Array(testimonials[currentIndex].rating)].map((_, i) => (
-                <Star key={i} className="w-6 h-6 text-yellow-400 fill-yellow-400" />
+                <Star
+                  key={i}
+                  className="w-6 h-6 text-yellow-400 fill-yellow-400"
+                />
               ))}
             </div>
 
@@ -96,15 +94,12 @@ const Testimonials = () => {
               "{testimonials[currentIndex].text}"
             </p>
 
-            <div className="flex items-center space-x-4">
-              <img
-                src={testimonials[currentIndex].image}
-                alt={testimonials[currentIndex].name}
-                className="w-16 h-16 rounded-full object-cover border-2 border-yellow-400"
-              />
-              <div>
-                <div className="text-lg font-bold text-white">{testimonials[currentIndex].name}</div>
-                <div className="text-gray-400">{testimonials[currentIndex].role}</div>
+            <div>
+              <div className="text-lg font-bold text-white">
+                {testimonials[currentIndex].name}
+              </div>
+              <div className="text-gray-400">
+                {testimonials[currentIndex].role}
               </div>
             </div>
           </div>
@@ -124,8 +119,8 @@ const Testimonials = () => {
                   onClick={() => setCurrentIndex(index)}
                   className={`h-2 rounded-full transition-all duration-300 ${
                     index === currentIndex
-                      ? 'w-8 bg-yellow-400'
-                      : 'w-2 bg-gray-600 hover:bg-gray-500'
+                      ? "w-8 bg-yellow-400"
+                      : "w-2 bg-gray-600 hover:bg-gray-500"
                   }`}
                 />
               ))}
@@ -142,20 +137,20 @@ const Testimonials = () => {
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16 max-w-5xl mx-auto">
           <div className="text-center">
+            <div className="text-4xl font-bold text-gradient mb-2">200+</div>
+            <div className="text-gray-400">Hotels Served</div>
+          </div>
+          <div className="text-center">
+            <div className="text-4xl font-bold text-gradient mb-2">95%</div>
+            <div className="text-gray-400">Client Satisfaction</div>
+          </div>
+          <div className="text-center">
             <div className="text-4xl font-bold text-gradient mb-2">500+</div>
-            <div className="text-gray-400">Happy Clients</div>
-          </div>
-          <div className="text-center">
-            <div className="text-4xl font-bold text-gradient mb-2">98%</div>
-            <div className="text-gray-400">Satisfaction Rate</div>
-          </div>
-          <div className="text-center">
-            <div className="text-4xl font-bold text-gradient mb-2">1000+</div>
             <div className="text-gray-400">Projects Delivered</div>
           </div>
           <div className="text-center">
             <div className="text-4xl font-bold text-gradient mb-2">24/7</div>
-            <div className="text-gray-400">Support Available</div>
+            <div className="text-gray-400">Support</div>
           </div>
         </div>
       </div>
