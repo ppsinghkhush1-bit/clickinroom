@@ -15,13 +15,16 @@ const Footer = () => {
           {/* Brand Column */}
           <div>
             <div className="flex items-center space-x-3 mb-6">
-              <div className="w-12 h-12 rounded-lg overflow-hidden flex items-center justify-center shadow-lg bg-white/10">
-                <img 
-                  src="/logo.png" 
-                  alt="ClickInRoom Logo" 
-                  className="w-full h-full object-contain"
-                />
-              </div>
+              {/* Removed the box wrapper div. Image now sits freely. */}
+              <img 
+                src="/logo.png" 
+                alt="ClickInRoom Logo" 
+                className="h-12 w-auto object-contain" // Adjusted height to match text size
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.style.display = 'none';
+                }}
+              />
               <div className="flex flex-col">
                 <span className="text-gradient text-xl font-bold tracking-wider">ClickInRoom</span>
                 <span className="text-xs text-gray-400">Hotel Digital Marketing Agency, Ludhiana</span>
