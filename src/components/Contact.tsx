@@ -239,11 +239,11 @@ const Contact = () => {
               <div className="space-y-3 text-stone-300">
                 <div className="flex justify-between">
                   <span>Monday - Friday</span>
-                  <span className="text-amber-200">9:00 AM - 8:00 PM</span>
+                  <span className="text-amber-200">10:00 AM - 6:00 PM</span>
                 </div>
                 <div className="flex justify-between">
                   <span>Saturday</span>
-                  <span className="text-amber-200">10:00 AM - 6:00 PM</span>
+                  <span className="text-amber-200">10:00 AM - 4:00 PM</span>
                 </div>
                 <div className="flex justify-between">
                   <span>Sunday</span>
