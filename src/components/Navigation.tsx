@@ -38,7 +38,7 @@ const Navigation = ({ scrolled }: NavigationProps) => {
             </div>
             <div className="flex flex-col">
               <span className="text-gradient text-xl font-bold tracking-wider">ClickInRoom</span>
-              <span className="text-xs text-gray-400">Digital Marketing Agency, Ludhiana</span>
+              <span className="text-xs text-gray-400">Hotel Digital Marketing Agency, Ludhiana</span>
             </div>
           </div>
 
