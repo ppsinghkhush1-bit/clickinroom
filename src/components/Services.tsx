@@ -165,7 +165,7 @@ const Services = () => {
 
               <div className="flex items-center justify-end pt-4 border-t border-gray-700">
                 <button className="text-sm text-gray-400 hover:text-yellow-400 transition-colors">
-                  Learn More →
+                  Contact Us for More
                 </button>
               </div>
             </div>
