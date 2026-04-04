@@ -1,8 +1,18 @@
-import { useState } from 'react';
+import { useState, FormEvent, ChangeEvent } from 'react';
 import { Send } from 'lucide-react';
 
+// Define the shape of our form data
+interface FormData {
+  name: string;
+  email: string;
+  phone: string;
+  hotelName: string;
+  service: string;
+  message: string;
+}
+
 const Booking = () => {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
     phone: '',
@@ -30,22 +40,35 @@ const Booking = () => {
     'Travel & Concierge Services'
   ];
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  // Handle input changes
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  // Handle form submission
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     console.log('Form Submitted:', formData);
-    alert('Thank you! We will get back to you shortly.');
-    // Add your API logic here
+    alert('Thank you! Your request has been received. We will contact you shortly.');
+    // Reset form after submission
+    setFormData({
+      name: '',
+      email: '',
+      phone: '',
+      hotelName: '',
+      service: '',
+      message: ''
+    });
   };
 
   return (
     <section className="py-24 relative overflow-hidden min-h-screen flex items-center justify-center">
+      {/* Background Gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-gray-900 via-black to-gray-800"></div>
 
       <div className="relative z-10 w-full max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Header */}
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
             <span className="text-white">Book Your</span>
@@ -56,6 +79,7 @@ const Booking = () => {
           </p>
         </div>
 
+        {/* Form Container */}
         <div className="glass-morphism rounded-xl p-8 md:p-12">
           <form onSubmit={handleSubmit} className="space-y-6">
             
@@ -122,12 +146,19 @@ const Booking = () => {
                 value={formData.service}
                 onChange={handleChange}
                 required
-                className="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-yellow-400 transition-colors appearance-none"
-                style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='white'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 1rem center', backgroundSize: '1.5em' }}
+                className="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-yellow-400 transition-colors appearance-none cursor-pointer"
+                style={{ 
+                  backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='white'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`, 
+                  backgroundRepeat: 'no-repeat', 
+                  backgroundPosition: 'right 1rem center', 
+                  backgroundSize: '1.5em' 
+                }}
               >
                 <option value="" disabled>Select a service</option>
                 {services.map((service, index) => (
-                  <option key={index} value={service} className="bg-gray-800 text-white">{service}</option>
+                  <option key={index} value={service} className="bg-gray-800 text-white">
+                    {service}
+                  </option>
                 ))}
               </select>
             </div>
@@ -137,7 +168,7 @@ const Booking = () => {
               <label className="block text-gray-300 mb-2 font-medium">Message</label>
               <textarea
                 name="message"
-                rows="4"
+                rows={4}
                 placeholder="Tell us about your project..."
                 value={formData.message}
                 onChange={handleChange}
