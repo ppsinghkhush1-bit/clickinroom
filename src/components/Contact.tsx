@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Send, Phone, Mail, MapPin, CheckCircle } from 'lucide-react';
+import { Send, Phone, Mail, MapPin, CheckCircle, Loader2 } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 
 const Contact = () => {
@@ -13,20 +13,28 @@ const Contact = () => {
   });
 
   const [submitted, setSubmitted] = useState(false);
+  const [isSending, setIsSending] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSending(true);
 
     // ------------------------------------------------------------------
     // EMAILJS CONFIGURATION
-    // Replace the placeholders below with your actual EmailJS credentials
+    // Uses Vite Environment Variables (See .env file setup below)
     // ------------------------------------------------------------------
-    const serviceId = 'YOUR_SERVICE_ID';       // e.g., service_xxxxxxx
-    const templateId = 'YOUR_TEMPLATE_ID';     // e.g., template_xxxxxxx
-    const publicKey = 'YOUR_PUBLIC_KEY';      // e.g., user_xxxxxxx
+    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
-    // Prepare the template parameters
-    // Ensure these keys match the variables in your EmailJS template (e.g., {{from_name}})
+    // Simple validation to ensure keys are present
+    if (!serviceId || !templateId || !publicKey) {
+      console.error('Missing EmailJS credentials in .env file');
+      alert('Configuration error: Missing EmailJS credentials. Please check your .env file.');
+      setIsSending(false);
+      return;
+    }
+
     const templateParams = {
       from_name: formData.name,
       from_email: formData.email,
@@ -36,29 +44,28 @@ const Contact = () => {
       message: formData.message,
     };
 
-    // Send the email
-    emailjs.send(serviceId, templateId, templateParams, publicKey)
-      .then((response) => {
-        console.log('SUCCESS!', response.status, response.text);
-        setSubmitted(true);
-        
-        // Reset form after 3 seconds
-        setTimeout(() => {
-          setSubmitted(false);
-          setFormData({
-            name: '',
-            email: '',
-            phone: '',
-            hotelName: '',
-            service: '',
-            message: '',
-          });
-        }, 3000);
-      })
-      .catch((err) => {
-        console.error('FAILED...', err);
-        alert('Failed to send the message. Please check your connection and try again.');
-      });
+    try {
+      const response = await emailjs.send(serviceId, templateId, templateParams, publicKey);
+      console.log('SUCCESS!', response.status, response.text);
+      setSubmitted(true);
+      
+      setTimeout(() => {
+        setSubmitted(false);
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          hotelName: '',
+          service: '',
+          message: '',
+        });
+      }, 3000);
+    } catch (err) {
+      console.error('FAILED...', err);
+      alert('Failed to send the message. Please check your connection and try again.');
+    } finally {
+      setIsSending(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -203,10 +210,20 @@ const Contact = () => {
 
                   <button
                     type="submit"
-                    className="w-full px-8 py-4 bg-gradient-to-r from-amber-200 to-yellow-300 text-stone-900 font-bold rounded-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 flex items-center justify-center space-x-2"
+                    disabled={isSending}
+                    className="w-full px-8 py-4 bg-gradient-to-r from-amber-200 to-yellow-300 text-stone-900 font-bold rounded-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 flex items-center justify-center space-x-2 disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100"
                   >
-                    <span>Send Message</span>
-                    <Send className="w-5 h-5" />
+                    {isSending ? (
+                      <>
+                        <Loader2 className="w-5 h-5 animate-spin" />
+                        <span>Sending...</span>
+                      </>
+                    ) : (
+                      <>
+                        <span>Send Message</span>
+                        <Send className="w-5 h-5" />
+                      </>
+                    )}
                   </button>
                 </form>
               )}
