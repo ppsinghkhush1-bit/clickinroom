@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Send, Phone, Mail, MapPin, CheckCircle, Loader2 } from 'lucide-react';
+import { Send, Phone, Mail, MapPin, CheckCircle } from 'lucide-react';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -12,38 +12,24 @@ const Contact = () => {
   });
 
   const [submitted, setSubmitted] = useState(false);
-  const [isSending, setIsSending] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSending(true);
-
-    // Simulating a server request (1.5 seconds delay)
-    // You can replace this with your actual API call later
-    try {
-      console.log('Form Data Submitted:', formData);
-      
-      await new Promise(resolve => setTimeout(resolve, 1500));
-
-      setSubmitted(true);
-      
-      setTimeout(() => {
-        setSubmitted(false);
-        setFormData({
-          name: '',
-          email: '',
-          phone: '',
-          hotelName: '',
-          service: '',
-          message: '',
-        });
-      }, 3000);
-    } catch (err) {
-      console.error('FAILED...', err);
-      alert('Failed to send the message. Please try again.');
-    } finally {
-      setIsSending(false);
-    }
+    // Simulating form submission
+    console.log('Form submitted:', formData);
+    setSubmitted(true);
+    
+    setTimeout(() => {
+      setSubmitted(false);
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        hotelName: '',
+        service: '',
+        message: '',
+      });
+    }, 3000);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -188,20 +174,10 @@ const Contact = () => {
 
                   <button
                     type="submit"
-                    disabled={isSending}
-                    className="w-full px-8 py-4 bg-gradient-to-r from-amber-200 to-yellow-300 text-stone-900 font-bold rounded-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 flex items-center justify-center space-x-2 disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100"
+                    className="w-full px-8 py-4 bg-gradient-to-r from-amber-200 to-yellow-300 text-stone-900 font-bold rounded-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 flex items-center justify-center space-x-2"
                   >
-                    {isSending ? (
-                      <>
-                        <Loader2 className="w-5 h-5 animate-spin" />
-                        <span>Sending...</span>
-                      </>
-                    ) : (
-                      <>
-                        <span>Send Message</span>
-                        <Send className="w-5 h-5" />
-                      </>
-                    )}
+                    <span>Send Message</span>
+                    <Send className="w-5 h-5" />
                   </button>
                 </form>
               )}
