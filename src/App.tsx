@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
 import Navigation from './components/Navigation';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -8,6 +10,7 @@ import Gallery from './components/Gallery';
 import Testimonials from './components/Testimonials';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import Booking from './components/Booking'; // Import the Booking component
 
 function App() {
   const [scrolled, setScrolled] = useState(false);
@@ -27,17 +30,31 @@ function App() {
   }, []);
 
   return (
-    <div className="bg-gradient-to-b from-gray-900 via-gray-800 to-black text-white overflow-x-hidden">
-      <Navigation scrolled={scrolled} />
-      <Hero />
-      <About />
-      <Services />
-      <Rooms />
-      <Gallery />
-      <Testimonials />
-      <Contact />
-      <Footer />
-    </div>
+    <Router>
+      <div className="bg-gradient-to-b from-gray-900 via-gray-800 to-black text-white overflow-x-hidden">
+        <Navigation scrolled={scrolled} />
+        
+        <Routes>
+          {/* Home Page Route */}
+          <Route path="/" element={
+            <>
+              <Hero />
+              <About />
+              <Services />
+              <Rooms />
+              <Gallery />
+              <Testimonials />
+              <Contact />
+            </>
+          } />
+          
+          {/* Booking Page Route */}
+          <Route path="/booking" element={<Booking />} />
+        </Routes>
+        
+        <Footer />
+      </div>
+    </Router>
   );
 }
 
