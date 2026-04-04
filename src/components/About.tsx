@@ -24,15 +24,15 @@ const About = () => {
             </h2>
 
             <p className="text-stone-300 text-lg mb-6 leading-relaxed">
-              ClickInRoom is India's premier hospitality digital solutions provider, specializing in comprehensive
-              hotel marketing, web development, and revenue optimization. We blend cutting-edge technology with
-              deep industry expertise to help hotels thrive in the digital age.
+              ClickInRoom is a leading hospitality digital solutions provider in India, dedicated to helping hotels grow, perform, and stand out in the digital world. We specialize in hotel marketing, website development, and revenue optimization—delivering smart, result-driven strategies tailored for the hospitality industry.
+
+With a perfect blend of advanced technology and deep industry expertise, we help hotels increase their online visibility, drive more direct bookings, and build strong, lasting relationships with guests.
             </p>
 
             <p className="text-stone-400 mb-8 leading-relaxed">
-              From boutique properties to luxury resorts, our team has helped over 500 hotels across India
-              maximize their online presence, increase direct bookings, and build lasting guest relationships.
-              Our data-driven approach ensures measurable results and exceptional ROI.
+              Having successfully partnered with over 500 hotels across India—from boutique stays to luxury resorts—we are committed to delivering measurable growth and exceptional ROI through data-driven solutions.
+
+Join us to elevate your hotel and make it truly exceptional.
             </p>
 
             <div className="grid grid-cols-2 gap-6">
