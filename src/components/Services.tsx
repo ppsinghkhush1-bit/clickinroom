@@ -68,12 +68,6 @@ const Services = () => {
       gradient: 'from-rose-500 to-pink-500',
     },
     {
-      icon: Smartphone,
-      title: 'Pre-Launch Marketing',
-      description: 'Build anticipation and generate bookings before your hotel even opens its doors.',
-      gradient: 'from-violet-500 to-purple-500',
-    },
-    {
       icon: Camera,
       title: 'Hotel Photography',
       description: 'Professional photography that showcases your property in the best light and increases bookings.',
@@ -96,24 +90,6 @@ const Services = () => {
       title: 'Hotel Booking Engine',
       description: 'Powerful, commission-free booking engine that integrates seamlessly with your website.',
       gradient: 'from-cyan-500 to-blue-500',
-    },
-    {
-      icon: Laptop,
-      title: 'Luxury Stays & Accommodations',
-      description: 'Premium room booking services with curated luxury experiences for discerning travelers.',
-      gradient: 'from-yellow-600 to-amber-600',
-    },
-    {
-      icon: Calendar,
-      title: 'Event Management',
-      description: 'Professional event planning and management services for weddings, conferences, and special occasions.',
-      gradient: 'from-pink-500 to-rose-500',
-    },
-    {
-      icon: Plane,
-      title: 'Travel & Concierge Services',
-      description: 'VIP concierge services including travel planning, reservations, and personalized experiences.',
-      gradient: 'from-blue-600 to-indigo-600',
     },
   ];
 
