@@ -17,7 +17,7 @@ const Footer = () => {
             <div className="flex items-center space-x-3 mb-6">
               <div className="w-12 h-12 rounded-lg overflow-hidden flex items-center justify-center shadow-lg bg-white/10">
                 <img 
-                  src="/click in rrom.png" 
+                  src="/logo.png" 
                   alt="ClickInRoom Logo" 
                   className="w-full h-full object-contain"
                 />
