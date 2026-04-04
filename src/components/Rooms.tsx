@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Bed, Users, Maximize, Star, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-// Define the Room interface for TypeScript
 interface Room {
   id: number;
   category: string;
@@ -151,4 +150,58 @@ const Rooms = () => {
                   alt={room.name}
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                 />
-                <div className="absolute top-4 right-4 glass-morphism-dark px-3 py
+                <div className="absolute top-4 right-4 glass-morphism-dark px-3 py-1 rounded-full flex items-center space-x-1">
+                  <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
+                  <span className="text-white font-semibold text-sm">{room.rating}</span>
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              </div>
+
+              <div className="p-6">
+                <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-yellow-400 transition-colors">
+                  {room.name}
+                </h3>
+
+                <p className="text-gray-400 text-sm mb-4">
+                  {room.description}
+                </p>
+
+                <div className="flex items-center space-x-4 mb-4 text-sm text-gray-400">
+                  <div className="flex items-center space-x-1">
+                    <Maximize className="w-4 h-4" />
+                    <span>{room.size}</span>
+                  </div>
+                  <div className="flex items-center space-x-1">
+                    <Users className="w-4 h-4" />
+                    <span>{room.guests} Guests</span>
+                  </div>
+                  <div className="flex items-center space-x-1">
+                    <Bed className="w-4 h-4" />
+                    <span>King Bed</span>
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between pt-4 border-t border-gray-700">
+                  <div>
+                    <div className="text-sm text-gray-400">Starting from</div>
+                    <div className="text-2xl font-bold text-gradient">{room.price}</div>
+                  </div>
+                  
+                  <Link 
+                    to="/booking" 
+                    className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-yellow-400 to-amber-600 text-black font-semibold rounded-lg hover:shadow-xl transition-all"
+                  >
+                    <span>Book Now</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Rooms;
