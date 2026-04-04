@@ -31,7 +31,7 @@ const Navigation = ({ scrolled }: NavigationProps) => {
           <div className="flex items-center space-x-2">
             <div className="w-12 h-12 bg-gradient-to-br from-yellow-400 to-amber-600 rounded-lg flex items-center justify-center shadow-lg">
               <img 
-                  src="/click in rrom.png" 
+                  src="/logo.png" 
                   alt="ClickInRoom Logo" 
                   className="w-full h-full object-contain"
                 />
