@@ -27,25 +27,28 @@ const Navigation = ({ scrolled }: NavigationProps) => {
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Added items-center here to ensure logo and text align vertically */}
         <div className="flex items-center justify-between h-20">
-          <div className="flex items-center space-x-2">
-             <div className="flex items-center space-x-4 mb-6">
-              <img 
-                src="/logo.png" 
-                alt="ClickInRoom Logo" 
-                className="h-20 w-auto object-contain" // Adjusted height to match text size
-                onError={(e) => {
-                  const target = e.target as HTMLImageElement;
-                  target.style.display = 'none';
-                }}
-              />
-            </div>
-            <div className="flex flex-col">
+          
+          {/* Logo and Brand Name Section */}
+          <div className="flex items-center space-x-3">
+            <img 
+              src="/logo.png" 
+              alt="ClickInRoom Logo" 
+              // Set height to h-16 (64px) to fit nicely in the h-20 navbar
+              className="h-16 w-auto object-contain"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.style.display = 'none';
+              }}
+            />
+            <div className="flex flex-col justify-center">
               <span className="text-gradient text-xl font-bold tracking-wider">ClickInRoom</span>
               <span className="text-xs text-gray-400">Hotel Digital Marketing Agency, Ludhiana</span>
             </div>
           </div>
 
+          {/* Desktop Navigation Links */}
           <div className="hidden md:flex items-center space-x-1">
             {navLinks.map((link) => (
               <a
@@ -58,8 +61,9 @@ const Navigation = ({ scrolled }: NavigationProps) => {
             ))}
           </div>
 
+          {/* Desktop CTA */}
           <div className="hidden md:flex items-center space-x-4">
-            <a href="tel:+919876543210" className="flex items-center text-sm text-gray-300 hover:text-yellow-400 transition">
+            <a href="tel:+917508639613" className="flex items-center text-sm text-gray-300 hover:text-yellow-400 transition">
               <Phone className="w-4 h-4 mr-2" />
               <span>+91 75086 39613</span>
             </a>
@@ -71,6 +75,7 @@ const Navigation = ({ scrolled }: NavigationProps) => {
             </a>
           </div>
 
+          {/* Mobile Menu Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="md:hidden p-2 rounded-lg glass-morphism"
@@ -80,6 +85,7 @@ const Navigation = ({ scrolled }: NavigationProps) => {
         </div>
       </div>
 
+      {/* Mobile Menu Dropdown */}
       {isOpen && (
         <div className="md:hidden glass-morphism-dark">
           <div className="px-4 pt-2 pb-6 space-y-2">
