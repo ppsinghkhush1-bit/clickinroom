@@ -19,15 +19,11 @@ const Contact = () => {
     e.preventDefault();
     setIsSending(true);
 
-    // ------------------------------------------------------------------
-    // EMAILJS CONFIGURATION
-    // Uses Vite Environment Variables (See .env file setup below)
-    // ------------------------------------------------------------------
+    // EmailJS Configuration using Vite Environment Variables
     const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
     const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
     const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
-    // Simple validation to ensure keys are present
     if (!serviceId || !templateId || !publicKey) {
       console.error('Missing EmailJS credentials in .env file');
       alert('Configuration error: Missing EmailJS credentials. Please check your .env file.');
