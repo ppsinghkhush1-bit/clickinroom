@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Send, Phone, Mail, MapPin, CheckCircle } from 'lucide-react';
+import emailjs from '@emailjs/browser';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -15,18 +16,49 @@ const Contact = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        hotelName: '',
-        service: '',
-        message: '',
+
+    // ------------------------------------------------------------------
+    // EMAILJS CONFIGURATION
+    // Replace the placeholders below with your actual EmailJS credentials
+    // ------------------------------------------------------------------
+    const serviceId = 'YOUR_SERVICE_ID';       // e.g., service_xxxxxxx
+    const templateId = 'YOUR_TEMPLATE_ID';     // e.g., template_xxxxxxx
+    const publicKey = 'YOUR_PUBLIC_KEY';      // e.g., user_xxxxxxx
+
+    // Prepare the template parameters
+    // Ensure these keys match the variables in your EmailJS template (e.g., {{from_name}})
+    const templateParams = {
+      from_name: formData.name,
+      from_email: formData.email,
+      phone: formData.phone,
+      hotel_name: formData.hotelName,
+      service: formData.service,
+      message: formData.message,
+    };
+
+    // Send the email
+    emailjs.send(serviceId, templateId, templateParams, publicKey)
+      .then((response) => {
+        console.log('SUCCESS!', response.status, response.text);
+        setSubmitted(true);
+        
+        // Reset form after 3 seconds
+        setTimeout(() => {
+          setSubmitted(false);
+          setFormData({
+            name: '',
+            email: '',
+            phone: '',
+            hotelName: '',
+            service: '',
+            message: '',
+          });
+        }, 3000);
+      })
+      .catch((err) => {
+        console.error('FAILED...', err);
+        alert('Failed to send the message. Please check your connection and try again.');
       });
-    }, 3000);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -192,10 +224,14 @@ const Contact = () => {
                   </div>
                   <div>
                     <div className="text-sm text-stone-400 mb-1">Phone</div>
-                    <a href="tel:+919876543210" className="text-lg text-stone-100 hover:text-amber-200 transition-colors">
-                      +91 75086 39613
-                      +91 75088 84886
-                    </a>
+                    <div className="space-y-1">
+                      <a href="tel:+917508639613" className="block text-lg text-stone-100 hover:text-amber-200 transition-colors">
+                        +91 75086 39613
+                      </a>
+                      <a href="tel:+917710584886" className="block text-lg text-stone-100 hover:text-amber-200 transition-colors">
+                        +91 77105 84886
+                      </a>
+                    </div>
                   </div>
                 </div>
 
@@ -251,7 +287,7 @@ const Contact = () => {
                 Schedule a free 30-minute consultation to discuss your hotel's digital transformation.
               </p>
               <a
-                href="tel:+919876543210"
+                href="tel:+917508639613"
                 className="inline-block px-6 py-3 bg-gradient-to-r from-amber-200 to-yellow-300 text-stone-900 font-bold rounded-lg hover:shadow-xl transition-all"
               >
                 Call Now
