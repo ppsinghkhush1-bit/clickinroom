@@ -2,21 +2,28 @@ import { useState, useEffect } from 'react';
 import { X, ZoomIn, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const Gallery = () => {
-  // State for the currently selected hotel and the image index within that hotel's gallery
   const [selectedHotel, setSelectedHotel] = useState<any>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  // Hotel Data: Array of hotel objects, each with their own gallery
+  // Hotel Data List
   const hotels = [
     {
       id: 1,
       name: 'Hotel Mezbaan',
-      mainImage: '/hotel mezbaan/WhatsApp Image 2026-01-31 at 12.26.31.jpeg',
+      // Main image is the first one in your list
+      mainImage: '/hotel mezbaan/436c0fb1-a443-409f-980f-9b88cff5ae44.jpeg',
       gallery: [
         '/hotel mezbaan/436c0fb1-a443-409f-980f-9b88cff5ae44.jpeg',
-        '/hotel mezbaan/WhatsApp Image 2026-01-31 at 12.26.32.jpeg',
+        '/hotel mezbaan/948953f7-3d4a-4f71-a50a-63cf3fe6943c.jpeg',
         '/hotel mezbaan/WhatsApp Image 2026-01-31 at 12.26.21.jpeg',
         '/hotel mezbaan/WhatsApp Image 2026-01-31 at 12.26.22.jpeg',
+        '/hotel mezbaan/WhatsApp Image 2026-01-31 at 12.26.23.jpeg',
+        '/hotel mezbaan/WhatsApp Image 2026-01-31 at 12.26.24.jpeg',
+        '/hotel mezbaan/WhatsApp Image 2026-01-31 at 12.26.27.jpeg',
+        '/hotel mezbaan/WhatsApp Image 2026-01-31 at 12.26.28.jpeg',
+        '/hotel mezbaan/WhatsApp Image 2026-01-31 at 12.26.29.jpeg',
+        '/hotel mezbaan/WhatsApp Image 2026-01-31 at 12.26.31.jpeg',
+        '/hotel mezbaan/WhatsApp Image 2026-01-31 at 12.26.32.jpeg',
       ],
     },
     {
@@ -26,7 +33,6 @@ const Gallery = () => {
       gallery: [
         'https://images.pexels.com/photos/262047/pexels-photo-262047.jpeg?auto=compress&cs=tinysrgb&w=800',
         'https://images.pexels.com/photos/1579253/pexels-photo-1579253.jpeg?auto=compress&cs=tinysrgb&w=800',
-        'https://images.pexels.com/photos/2467285/pexels-photo-2467285.jpeg?auto=compress&cs=tinysrgb&w=800',
       ],
     },
     {
@@ -40,19 +46,16 @@ const Gallery = () => {
     },
   ];
 
-  // Open Lightbox with the selected hotel
   const openLightbox = (hotel: any) => {
     setSelectedHotel(hotel);
     setCurrentImageIndex(0);
   };
 
-  // Close Lightbox
   const closeLightbox = () => {
     setSelectedHotel(null);
     setCurrentImageIndex(0);
   };
 
-  // Navigation Logic
   const goToNext = () => {
     if (!selectedHotel) return;
     const totalImages = selectedHotel.gallery.length;
@@ -65,7 +68,6 @@ const Gallery = () => {
     setCurrentImageIndex((prev) => (prev === 0 ? totalImages - 1 : prev - 1));
   };
 
-  // Keyboard Navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (!selectedHotel) return;
@@ -115,10 +117,8 @@ const Gallery = () => {
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
               />
               
-              {/* Gradient Overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></div>
 
-              {/* Content Overlay */}
               <div className="absolute inset-0 flex flex-col justify-end p-6 opacity-90 group-hover:opacity-100 transition-opacity">
                 <h3 className="text-white text-2xl font-bold mb-2">{hotel.name}</h3>
                 <div className="flex items-center text-yellow-400 text-sm font-medium">
@@ -137,7 +137,6 @@ const Gallery = () => {
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 p-4"
           onClick={closeLightbox}
         >
-          {/* Close Button */}
           <button
             className="absolute top-6 right-6 p-2 bg-white/10 rounded-full hover:bg-white/20 transition-all z-50"
             onClick={closeLightbox}
@@ -145,7 +144,6 @@ const Gallery = () => {
             <X className="w-8 h-8 text-white" />
           </button>
 
-          {/* Previous Button */}
           <button
             className="absolute left-4 md:left-8 p-2 bg-white/10 rounded-full hover:bg-white/20 transition-all z-50"
             onClick={(e) => {
@@ -156,7 +154,6 @@ const Gallery = () => {
             <ChevronLeft className="w-8 h-8 text-white" />
           </button>
 
-          {/* Next Button */}
           <button
             className="absolute right-4 md:right-8 p-2 bg-white/10 rounded-full hover:bg-white/20 transition-all z-50"
             onClick={(e) => {
@@ -167,7 +164,6 @@ const Gallery = () => {
             <ChevronRight className="w-8 h-8 text-white" />
           </button>
 
-          {/* Main Image */}
           <div className="relative max-w-5xl w-full flex flex-col items-center">
             <img
               src={selectedHotel.gallery[currentImageIndex]}
@@ -176,7 +172,6 @@ const Gallery = () => {
               onClick={(e) => e.stopPropagation()}
             />
             
-            {/* Caption */}
             <div className="mt-4 text-center">
               <h3 className="text-white text-xl font-semibold">{selectedHotel.name}</h3>
               <p className="text-gray-400 text-sm mt-1">
