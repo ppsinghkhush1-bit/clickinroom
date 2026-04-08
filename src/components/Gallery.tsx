@@ -16,7 +16,7 @@ const Gallery = () => {
       title: 'Lobby & Reception',
     },
     {
-      url: '/hotel mezbaan/3.jpg',
+      url: '/hotel mezbaan/WhatsApp Image 2026-01-31 at 12.26.23.jpeg',
       title: 'Luxury Pool',
     },
     {
