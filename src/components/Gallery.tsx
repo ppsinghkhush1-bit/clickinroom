@@ -2,74 +2,81 @@ import { useState, useEffect } from 'react';
 import { X, ZoomIn, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const Gallery = () => {
-  // State to track the index of the currently selected image
-  const [currentIndex, setCurrentIndex] = useState<number | null>(null);
+  // State for the currently selected hotel and the image index within that hotel's gallery
+  const [selectedHotel, setSelectedHotel] = useState<any>(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  // Update these paths to match the files in your 'public/hotel mezbaan/' folder
-  const images = [
+  // Hotel Data: Array of hotel objects, each with their own gallery
+  const hotels = [
     {
-      url: '/hotel mezbaan/436c0fb1-a443-409f-980f-9b88cff5ae44.jpeg',
-      title: 'Hotel Exterior',
+      id: 1,
+      name: 'Hotel Mezbaan',
+      mainImage: '/hotel mezbaan/436c0fb1-a443-409f-980f-9b88cff5ae44.jpeg',
+      gallery: [
+        '/hotel mezbaan/436c0fb1-a443-409f-980f-9b88cff5ae44.jpeg',
+        '/hotel mezbaan/948953f7-3d4a-4f71-a50a-63cf3fe6943c.jpeg',
+        '/hotel mezbaan/WhatsApp Image 2026-01-31 at 12.26.21.jpeg',
+        '/hotel mezbaan/WhatsApp Image 2026-01-31 at 12.26.22.jpeg',
+      ],
     },
     {
-      url: '/hotel mezbaan/948953f7-3d4a-4f71-a50a-63cf3fe6943c.jpeg',
-      title: 'Lobby & Reception',
+      id: 2,
+      name: 'Grand Luxury Suite',
+      mainImage: 'https://images.pexels.com/photos/262047/pexels-photo-262047.jpeg?auto=compress&cs=tinysrgb&w=800',
+      gallery: [
+        'https://images.pexels.com/photos/262047/pexels-photo-262047.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/1579253/pexels-photo-1579253.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/2467285/pexels-photo-2467285.jpeg?auto=compress&cs=tinysrgb&w=800',
+      ],
     },
     {
-      url: '/hotel mezbaan/WhatsApp Image 2026-01-31 at 12.26.23.jpeg',
-      title: 'Luxury Pool',
-    },
-    {
-      url: '/hotel mezbaan/4.jpg',
-      title: 'Presidential Suite',
-    },
-    {
-      url: '/hotel mezbaan/5.jpg',
-      title: 'Fine Dining',
-    },
-    {
-      url: '/hotel mezbaan/6.jpg',
-      title: 'Spa & Wellness',
-    },
-    {
-      url: '/hotel mezbaan/7.jpg',
-      title: 'Conference Hall',
-    },
-    {
-      url: '/hotel mezbaan/8.jpg',
-      title: 'Deluxe Room',
+      id: 3,
+      name: 'Ocean View Resort',
+      mainImage: 'https://images.pexels.com/photos/1838554/pexels-photo-1838554.jpeg?auto=compress&cs=tinysrgb&w=800',
+      gallery: [
+        'https://images.pexels.com/photos/1838554/pexels-photo-1838554.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/1001965/pexels-photo-1001965.jpeg?auto=compress&cs=tinysrgb&w=800',
+      ],
     },
   ];
 
-  // Navigation functions for the Lightbox
-  const goToPrevious = () => {
-    if (currentIndex === null) return;
-    const isFirstSlide = currentIndex === 0;
-    const newIndex = isFirstSlide ? images.length - 1 : currentIndex - 1;
-    setCurrentIndex(newIndex);
+  // Open Lightbox with the selected hotel
+  const openLightbox = (hotel: any) => {
+    setSelectedHotel(hotel);
+    setCurrentImageIndex(0);
   };
 
+  // Close Lightbox
+  const closeLightbox = () => {
+    setSelectedHotel(null);
+    setCurrentImageIndex(0);
+  };
+
+  // Navigation Logic
   const goToNext = () => {
-    if (currentIndex === null) return;
-    const isLastSlide = currentIndex === images.length - 1;
-    const newIndex = isLastSlide ? 0 : currentIndex + 1;
-    setCurrentIndex(newIndex);
+    if (!selectedHotel) return;
+    const totalImages = selectedHotel.gallery.length;
+    setCurrentImageIndex((prev) => (prev === totalImages - 1 ? 0 : prev + 1));
   };
 
-  // Close modal on Escape key press
+  const goToPrevious = () => {
+    if (!selectedHotel) return;
+    const totalImages = selectedHotel.gallery.length;
+    setCurrentImageIndex((prev) => (prev === 0 ? totalImages - 1 : prev - 1));
+  };
+
+  // Keyboard Navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setCurrentIndex(null);
-      if (e.key === 'ArrowLeft') goToPrevious();
+      if (!selectedHotel) return;
+      if (e.key === 'Escape') closeLightbox();
       if (e.key === 'ArrowRight') goToNext();
+      if (e.key === 'ArrowLeft') goToPrevious();
     };
 
-    if (currentIndex !== null) {
-      window.addEventListener('keydown', handleKeyDown);
-    }
-
+    window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [currentIndex]);
+  }, [selectedHotel]);
 
   return (
     <section id="gallery" className="py-24 relative overflow-hidden">
@@ -79,44 +86,44 @@ const Gallery = () => {
         <div className="text-center mb-12">
           <div className="inline-block mb-4">
             <span className="px-4 py-2 bg-yellow-400/10 border border-yellow-400/30 rounded-full text-yellow-400 text-sm font-semibold">
-              Visual Experience
+              Our Properties
             </span>
           </div>
 
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            <span className="text-gradient">Explore Hotel</span>
+            <span className="text-gradient">Explore Our</span>
             <br />
-            <span className="text-white">Mezbaan</span>
+            <span className="text-white">Hotels</span>
           </h2>
 
           <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-            Take a visual tour through our exquisite facilities and accommodations
+            Select a property to view the full gallery
           </p>
         </div>
 
-        {/* Image Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          {images.map((image, index) => (
+        {/* Hotel List Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {hotels.map((hotel) => (
             <div
-              key={index}
-              className="group relative overflow-hidden rounded-xl cursor-pointer h-64"
-              onClick={() => setCurrentIndex(index)}
-              style={{
-                animation: `fadeIn 0.6s ease-out forwards ${index * 0.1}s`,
-                opacity: 0,
-              }}
+              key={hotel.id}
+              className="group relative overflow-hidden rounded-2xl shadow-xl cursor-pointer h-[400px]"
+              onClick={() => openLightbox(hotel)}
             >
               <img
-                src={image.url}
-                alt={image.title}
+                src={hotel.mainImage}
+                alt={hotel.name}
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <div className="absolute bottom-0 left-0 right-0 p-4">
-                  <h3 className="text-white font-semibold text-lg">{image.title}</h3>
-                </div>
-                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                  <ZoomIn className="w-12 h-12 text-yellow-400" />
+              
+              {/* Gradient Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></div>
+
+              {/* Content Overlay */}
+              <div className="absolute inset-0 flex flex-col justify-end p-6 opacity-90 group-hover:opacity-100 transition-opacity">
+                <h3 className="text-white text-2xl font-bold mb-2">{hotel.name}</h3>
+                <div className="flex items-center text-yellow-400 text-sm font-medium">
+                  <ZoomIn className="w-4 h-4 mr-2" />
+                  <span>View Gallery ({hotel.gallery.length} Photos)</span>
                 </div>
               </div>
             </div>
@@ -125,22 +132,22 @@ const Gallery = () => {
       </div>
 
       {/* Lightbox Modal */}
-      {currentIndex !== null && (
+      {selectedHotel && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 p-4"
-          onClick={() => setCurrentIndex(null)}
+          onClick={closeLightbox}
         >
           {/* Close Button */}
           <button
-            className="absolute top-8 right-8 p-2 glass-morphism rounded-full hover:bg-white/20 transition-all z-50"
-            onClick={() => setCurrentIndex(null)}
+            className="absolute top-6 right-6 p-2 bg-white/10 rounded-full hover:bg-white/20 transition-all z-50"
+            onClick={closeLightbox}
           >
             <X className="w-8 h-8 text-white" />
           </button>
 
           {/* Previous Button */}
           <button
-            className="absolute left-4 md:left-8 p-2 glass-morphism rounded-full hover:bg-white/20 transition-all z-50"
+            className="absolute left-4 md:left-8 p-2 bg-white/10 rounded-full hover:bg-white/20 transition-all z-50"
             onClick={(e) => {
               e.stopPropagation();
               goToPrevious();
@@ -151,7 +158,7 @@ const Gallery = () => {
 
           {/* Next Button */}
           <button
-            className="absolute right-4 md:right-8 p-2 glass-morphism rounded-full hover:bg-white/20 transition-all z-50"
+            className="absolute right-4 md:right-8 p-2 bg-white/10 rounded-full hover:bg-white/20 transition-all z-50"
             onClick={(e) => {
               e.stopPropagation();
               goToNext();
@@ -163,15 +170,18 @@ const Gallery = () => {
           {/* Main Image */}
           <div className="relative max-w-5xl w-full flex flex-col items-center">
             <img
-              src={images[currentIndex].url}
-              alt={images[currentIndex].title}
-              className="max-w-full max-h-[80vh] object-contain rounded-lg"
+              src={selectedHotel.gallery[currentImageIndex]}
+              alt={`Gallery Image ${currentImageIndex + 1}`}
+              className="max-w-full max-h-[80vh] object-contain rounded-lg shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             />
-            {/* Image Title Caption */}
+            
+            {/* Caption */}
             <div className="mt-4 text-center">
-              <h3 className="text-white text-xl font-semibold">{images[currentIndex].title}</h3>
-              <p className="text-gray-400 text-sm mt-1">{currentIndex + 1} / {images.length}</p>
+              <h3 className="text-white text-xl font-semibold">{selectedHotel.name}</h3>
+              <p className="text-gray-400 text-sm mt-1">
+                Photo {currentImageIndex + 1} of {selectedHotel.gallery.length}
+              </p>
             </div>
           </div>
         </div>
