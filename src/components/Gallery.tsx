@@ -53,14 +53,14 @@ const Gallery = () => {
     {
     id: 3,
     name: 'The Luxury Stays by Glambirds, Kasauli',
-    mainImage: '/varun kasuali/10-min-scaled-1000x667.jpg',
+    mainImage: '/varun kasuali/19-min-scaled-1000x667.jpg',
     gallery: [
       '/varun kasuali/10-min-scaled-1000x667.jpg',
       '/varun kasuali/12-min-scaled-1000x667.jpeg',
       '/varun kasuali/13-min-scaled-1000x667.jpg',
       '/varun kasuali/15-min-scaled-1000x667.jpg',
       '/varun kasuali/18-min-scaled-1000x667.jpg',
-      '/varun kasuali/19-min-scaled-1000x667.jpg',
+      '/varun kasuali/10-min-scaled-1000x667.jpg',
       '/varun kasuali/2-min-scaled-1000x667.jpg',
       '/varun kasuali/21-min-scaled-1000x667.jpg',
       '/varun kasuali/6-min-scaled-1000x667.jpg',
