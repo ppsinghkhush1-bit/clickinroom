@@ -10,7 +10,7 @@ const Gallery = () => {
     {
       id: 1,
       name: 'Hotel Mezbaan',
-      // Main image is the first one in your list
+      // Main image
       mainImage: '/hotel mezbaan/436c0fb1-a443-409f-980f-9b88cff5ae44.jpeg',
       gallery: [
         '/hotel mezbaan/436c0fb1-a443-409f-980f-9b88cff5ae44.jpeg',
@@ -112,7 +112,7 @@ const Gallery = () => {
               onClick={() => openLightbox(hotel)}
             >
               <img
-                src={hotel.mainImage}
+                src={encodeURI(hotel.mainImage)}
                 alt={hotel.name}
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
               />
@@ -165,8 +165,9 @@ const Gallery = () => {
           </button>
 
           <div className="relative max-w-5xl w-full flex flex-col items-center">
+            {/* FIX: Added encodeURI to handle spaces in filenames */}
             <img
-              src={selectedHotel.gallery[currentImageIndex]}
+              src={encodeURI(selectedHotel.gallery[currentImageIndex])}
               alt={`Gallery Image ${currentImageIndex + 1}`}
               className="max-w-full max-h-[80vh] object-contain rounded-lg shadow-2xl"
               onClick={(e) => e.stopPropagation()}
