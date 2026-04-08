@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Menu, X, Phone, Mail } from 'lucide-react';
+// Removed 'Mail' from import
+import { Menu, X, Phone } from 'lucide-react';
 
 interface NavigationProps {
   scrolled: boolean;
@@ -26,7 +27,6 @@ const Navigation = ({ scrolled }: NavigationProps) => {
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Added items-center here to ensure logo and text align vertically */}
         <div className="flex items-center justify-between h-20">
           
           {/* Logo and Brand Name Section */}
@@ -34,7 +34,6 @@ const Navigation = ({ scrolled }: NavigationProps) => {
             <img 
               src="/logo.png" 
               alt="ClickInRoom Logo" 
-              // Set height to h-16 (64px) to fit nicely in the h-20 navbar
               className="h-16 w-auto object-contain"
               onError={(e) => {
                 const target = e.target as HTMLImageElement;
