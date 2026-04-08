@@ -1,5 +1,6 @@
 import { useState, FormEvent, ChangeEvent } from 'react';
 import { Send } from 'lucide-react';
+import emailjs from '@emailjs/browser';
 
 // Define the shape of our form data
 interface FormData {
@@ -20,6 +21,12 @@ const Booking = () => {
     service: '',
     message: ''
   });
+
+  // EmailJS Configuration
+  // REPLACE THESE WITH YOUR ACTUAL KEYS FROM EMAILJS DASHBOARD
+  const SERVICE_ID = 'service_hu0fejb';       // e.g., 'service_x9k2m1n'
+  const TEMPLATE_ID = 'template_4dsqbrn';     // e.g., 'template_a1b2c3'
+  const PUBLIC_KEY = 'NSNP7QM8QEpLBGzy1';       // e.g., 'user_mnbvcxz'
 
   const services = [
     'Hotel Website Development',
@@ -49,17 +56,38 @@ const Booking = () => {
   // Handle form submission
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    console.log('Form Submitted:', formData);
-    alert('Thank you! Your request has been received. We will contact you shortly.');
-    // Reset form after submission
-    setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      hotelName: '',
-      service: '',
-      message: ''
-    });
+
+    // Prepare the parameters to send to EmailJS
+    // The keys on the left must match the {{variables}} in your EmailJS template
+    const templateParams = {
+      customer_name: formData.name,
+      customer_email: formData.email,
+      customer_mobile: formData.phone,
+      hotel_name: formData.hotelName,
+      service_type: formData.service,
+      message_content: formData.message,
+    };
+
+    // Send the email
+    emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams, PUBLIC_KEY)
+      .then((response) => {
+        console.log('SUCCESS!', response.status, response.text);
+        alert('Thank you! Your request has been received. We will contact you shortly.');
+        
+        // Reset form after submission
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          hotelName: '',
+          service: '',
+          message: ''
+        });
+      })
+      .catch((err) => {
+        console.error('FAILED...', err);
+        alert('Failed to send the message. Please check your connection and try again.');
+      });
   };
 
   return (
