@@ -11,10 +11,10 @@ const Gallery = () => {
     {
       id: 1,
       name: 'Hotel Mezbaan',
-      mainImage: '/hotel mezbaan/436c0fb1-a443-409f-980f-9b88cff5ae44.jpeg',
+      mainImage: '/hotel mezbaan/WhatsApp Image 2026-01-31 at 12.26.31.jpeg',
       gallery: [
         '/hotel mezbaan/436c0fb1-a443-409f-980f-9b88cff5ae44.jpeg',
-        '/hotel mezbaan/948953f7-3d4a-4f71-a50a-63cf3fe6943c.jpeg',
+        '/hotel mezbaan/WhatsApp Image 2026-01-31 at 12.26.32.jpeg',
         '/hotel mezbaan/WhatsApp Image 2026-01-31 at 12.26.21.jpeg',
         '/hotel mezbaan/WhatsApp Image 2026-01-31 at 12.26.22.jpeg',
       ],
