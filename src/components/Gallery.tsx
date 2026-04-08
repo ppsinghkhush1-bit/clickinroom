@@ -9,7 +9,7 @@ const Gallery = () => {
   const hotels = [
     {
       id: 1,
-      name: 'Hotel Mezbaan',
+      name: 'Hotel Mezbaan, Kasauli',
       mainImage: '/hotel mezbaan/WhatsApp Image 2026-01-31 at 12.26.21.jpeg',
       gallery: [
         '/hotel mezbaan/436c0fb1-a443-409f-980f-9b88cff5ae44.jpeg',
@@ -27,7 +27,7 @@ const Gallery = () => {
     },
     {
       id: 2,
-      name: 'Hotel Green Garden',
+      name: 'Hotel Green Garden, Ludhiana',
       mainImage: '/Hotel Green Garden/14.jpg',
       gallery: [
         '/Hotel Green Garden/14.jpg',
