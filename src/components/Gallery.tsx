@@ -10,7 +10,6 @@ const Gallery = () => {
     {
       id: 1,
       name: 'Hotel Mezbaan',
-      // Main image
       mainImage: '/hotel mezbaan/436c0fb1-a443-409f-980f-9b88cff5ae44.jpeg',
       gallery: [
         '/hotel mezbaan/436c0fb1-a443-409f-980f-9b88cff5ae44.jpeg',
@@ -28,11 +27,27 @@ const Gallery = () => {
     },
     {
       id: 2,
-      name: 'Grand Luxury Suite',
-      mainImage: 'https://images.pexels.com/photos/262047/pexels-photo-262047.jpeg?auto=compress&cs=tinysrgb&w=800',
+      name: 'Hotel Green Garden',
+      mainImage: '/Hotel Green Garden/10.jpg',
       gallery: [
-        'https://images.pexels.com/photos/262047/pexels-photo-262047.jpeg?auto=compress&cs=tinysrgb&w=800',
-        'https://images.pexels.com/photos/1579253/pexels-photo-1579253.jpeg?auto=compress&cs=tinysrgb&w=800',
+        '/Hotel Green Garden/10.jpg',
+        '/Hotel Green Garden/14.jpg',
+        '/Hotel Green Garden/20 copy.jpg',
+        '/Hotel Green Garden/20.jpg',
+        '/Hotel Green Garden/29.jpg',
+        '/Hotel Green Garden/45.jpg',
+        '/Hotel Green Garden/9.jpg',
+        '/Hotel Green Garden/de1.jpeg',
+        '/Hotel Green Garden/de2.jpeg',
+        '/Hotel Green Garden/de3.jpeg',
+        '/Hotel Green Garden/de4.jpeg',
+        '/Hotel Green Garden/image copy copy.png',
+        '/Hotel Green Garden/image copy.png',
+        '/Hotel Green Garden/image.png',
+        '/Hotel Green Garden/nr (202).jpeg',
+        '/Hotel Green Garden/nr (204).jpeg',
+        '/Hotel Green Garden/nr1 (201).jpeg',
+        '/Hotel Green Garden/standard2.png',
       ],
     },
     {
@@ -165,7 +180,6 @@ const Gallery = () => {
           </button>
 
           <div className="relative max-w-5xl w-full flex flex-col items-center">
-            {/* FIX: Added encodeURI to handle spaces in filenames */}
             <img
               src={encodeURI(selectedHotel.gallery[currentImageIndex])}
               alt={`Gallery Image ${currentImageIndex + 1}`}
