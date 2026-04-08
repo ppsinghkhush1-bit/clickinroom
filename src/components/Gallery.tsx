@@ -180,7 +180,9 @@ const Gallery = () => {
           </button>
 
           <div className="relative max-w-5xl w-full flex flex-col items-center">
+            {/* FIX: Added 'key' prop to force React to reload the image when index changes */}
             <img
+              key={selectedHotel.gallery[currentImageIndex]}
               src={encodeURI(selectedHotel.gallery[currentImageIndex])}
               alt={`Gallery Image ${currentImageIndex + 1}`}
               className="max-w-full max-h-[80vh] object-contain rounded-lg shadow-2xl"
