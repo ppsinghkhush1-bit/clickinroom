@@ -26,6 +26,7 @@ const Booking = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   // EmailJS Configuration
+  // Ensure these IDs are correct in your EmailJS Dashboard
   const SERVICE_ID = 'service_hu0fejb';
   const TEMPLATE_ID = 'template_4wtjpte';
   const PUBLIC_KEY = 'NSNP7QM8QEpLBGzy1';
@@ -56,7 +57,7 @@ const Booking = () => {
   };
 
   // Handle form submission
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
@@ -67,8 +68,11 @@ const Booking = () => {
       timeStyle: 'short',
     });
 
-    // Prepare the parameters to match your HTML template variables
+    // Prepare the parameters
+    // IMPORTANT: Change 'your_email@example.com' to the email address where you want to receive leads.
+    // ALSO IMPORTANT: Go to EmailJS Dashboard -> Email Templates -> Settings -> "To Email" and make sure it is set to {{to_email}}
     const templateParams = {
+      to_email: 'your_email@example.com', // <--- REPLACE THIS WITH YOUR EMAIL
       customer_name: formData.name,
       customer_email: formData.email,
       customer_mobile: formData.phone,
@@ -78,29 +82,30 @@ const Booking = () => {
       current_time: currentTime,
     };
 
-    // Send the email
-    emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams, PUBLIC_KEY)
-      .then((response) => {
-        console.log('SUCCESS!', response.status, response.text);
-        alert('Thank you! Your request has been received. We will contact you shortly.');
-        
-        // Reset form after submission
-        setFormData({
-          name: '',
-          email: '',
-          phone: '',
-          hotelName: '',
-          service: '',
-          message: ''
-        });
-      })
-      .catch((err) => {
-        console.error('FAILED...', err);
-        alert('Failed to send the message. Please check your connection and try again.');
-      })
-      .finally(() => {
-        setIsLoading(false); // Stop loading
+    console.log('Sending email with params:', templateParams);
+
+    try {
+      // Send the email
+      const response = await emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams, PUBLIC_KEY);
+      
+      console.log('SUCCESS!', response.status, response.text);
+      alert('Thank you! Your request has been received. We will contact you shortly.');
+      
+      // Reset form after submission
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        hotelName: '',
+        service: '',
+        message: ''
       });
+    } catch (err) {
+      console.error('FAILED...', err);
+      alert('Failed to send the message. Please check the console for details.');
+    } finally {
+      setIsLoading(false); // Stop loading
+    }
   };
 
   return (
