@@ -24,9 +24,9 @@ const Booking = () => {
 
   // EmailJS Configuration
   // REPLACE THESE WITH YOUR ACTUAL KEYS FROM EMAILJS DASHBOARD
-  const SERVICE_ID = 'service_hu0fejb';       // e.g., 'service_x9k2m1n'
-  const TEMPLATE_ID = 'template_4wtjpte';     // e.g., 'template_a1b2c3'
-  const PUBLIC_KEY = 'NSNP7QM8QEpLBGzy1';       // e.g., 'user_mnbvcxz'
+  const SERVICE_ID = 'service_hu0fejb';
+  const TEMPLATE_ID = 'template_4wtjpte';
+  const PUBLIC_KEY = 'NSNP7QM8QEpLBGzy1';
 
   const services = [
     'Hotel Website Development',
@@ -57,8 +57,15 @@ const Booking = () => {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
+    // Generate current time to match {{current_time}} in your template
+    const now = new Date();
+    const currentTime = now.toLocaleString('en-US', {
+      dateStyle: 'medium',
+      timeStyle: 'short',
+    });
+
     // Prepare the parameters to send to EmailJS
-    // The keys on the left must match the {{variables}} in your EmailJS template
+    // These keys match the {{variables}} in the HTML template you provided
     const templateParams = {
       customer_name: formData.name,
       customer_email: formData.email,
@@ -66,6 +73,7 @@ const Booking = () => {
       hotel_name: formData.hotelName,
       service_type: formData.service,
       message_content: formData.message,
+      current_time: currentTime, // Added this to match your HTML template
     };
 
     // Send the email
