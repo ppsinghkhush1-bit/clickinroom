@@ -25,7 +25,7 @@ const Booking = () => {
   // EmailJS Configuration
   // REPLACE THESE WITH YOUR ACTUAL KEYS FROM EMAILJS DASHBOARD
   const SERVICE_ID = 'service_hu0fejb';       // e.g., 'service_x9k2m1n'
-  const TEMPLATE_ID = 'template_4dsqbrn';     // e.g., 'template_a1b2c3'
+  const TEMPLATE_ID = 'template_4wtjpte';     // e.g., 'template_a1b2c3'
   const PUBLIC_KEY = 'NSNP7QM8QEpLBGzy1';       // e.g., 'user_mnbvcxz'
 
   const services = [
