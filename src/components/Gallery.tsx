@@ -121,7 +121,7 @@ const Gallery = () => {
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
             <span className="text-gradient">Explore Our</span>
             <br />
-            <span className="text-white">Hotels</span>
+            <span className="text-white">Clients Hotels</span>
           </h2>
 
           <p className="text-gray-400 text-lg max-w-2xl mx-auto">
