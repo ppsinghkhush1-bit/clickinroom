@@ -1,5 +1,5 @@
 import { useState, FormEvent, ChangeEvent } from 'react';
-import { Send } from 'lucide-react';
+import { Send, Loader2 } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 
 // Define the shape of our form data
@@ -22,8 +22,10 @@ const Booking = () => {
     message: ''
   });
 
+  // Loading state to track submission
+  const [isLoading, setIsLoading] = useState(false);
+
   // EmailJS Configuration
-  // REPLACE THESE WITH YOUR ACTUAL KEYS FROM EMAILJS DASHBOARD
   const SERVICE_ID = 'service_hu0fejb';
   const TEMPLATE_ID = 'template_4wtjpte';
   const PUBLIC_KEY = 'NSNP7QM8QEpLBGzy1';
@@ -56,38 +58,54 @@ const Booking = () => {
   // Handle form submission
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+    setIsLoading(true); // Start loading
 
-    // Generate current time to match {{current_time}} in your template
+    // Generate current time
     const now = new Date();
     const currentTime = now.toLocaleString('en-US', {
       dateStyle: 'medium',
       timeStyle: 'short',
     });
 
-    // Prepare the parameters to send to EmailJS
-    // These keys match the {{variables}} in the HTML template you provided
+    // Prepare the parameters
+    // to_email ensures it sends to your specific address
     const templateParams = {
+      to_email: 'support.clickinroom@gmail.com', 
+      reply_to: formData.email,
       customer_name: formData.name,
       customer_email: formData.email,
       customer_mobile: formData.phone,
       hotel_name: formData.hotelName,
       service_type: formData.service,
       message_content: formData.message,
-      current_time: currentTime, // Added this to match your HTML template
+      current_time: currentTime,
     };
 
     // Send the email
-    // Inside handleSubmit
-emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams, PUBLIC_KEY)
-  .then((response) => {
-    console.log('SUCCESS!', response.status, response.text);
-    alert('Message sent successfully!');
-    // Reset form...
-  })
-  .catch((err) => {
-    console.error('FULL ERROR:', err); // Check this in Console if it fails
-    alert(`Failed to send: ${err.text || 'Check console for details'}`);
-  });
+    emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams, PUBLIC_KEY)
+      .then((response) => {
+        console.log('SUCCESS!', response.status, response.text);
+        alert('Thank you! Your request has been received. We will contact you shortly.');
+        
+        // Reset form after submission
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          hotelName: '',
+          service: '',
+          message: ''
+        });
+      })
+      .catch((err) => {
+        console.error('FAILED...', err);
+        alert('Failed to send the message. Please check your connection and try again.');
+      })
+      .finally(() => {
+        setIsLoading(false); // Stop loading
+      });
+  };
+
   return (
     <section className="py-24 relative overflow-hidden min-h-screen flex items-center justify-center">
       {/* Background Gradient */}
@@ -205,10 +223,20 @@ emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams, PUBLIC_KEY)
             {/* Submit Button */}
             <button
               type="submit"
-              className="w-full flex items-center justify-center space-x-2 px-8 py-4 bg-gradient-to-r from-yellow-400 to-amber-600 text-black font-bold rounded-lg hover:shadow-2xl hover:scale-105 transition-all duration-300"
+              disabled={isLoading}
+              className="w-full flex items-center justify-center space-x-2 px-8 py-4 bg-gradient-to-r from-yellow-400 to-amber-600 text-black font-bold rounded-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
             >
-              <span>Send Message</span>
-              <Send className="w-5 h-5" />
+              {isLoading ? (
+                <>
+                  <Loader2 className="w-5 h-5 animate-spin" />
+                  <span>Sending...</span>
+                </>
+              ) : (
+                <>
+                  <span>Send Message</span>
+                  <Send className="w-5 h-5" />
+                </>
+              )}
             </button>
           </form>
         </div>
