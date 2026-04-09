@@ -72,7 +72,7 @@ const Booking = () => {
     // IMPORTANT: Change 'your_email@example.com' to the email address where you want to receive leads.
     // ALSO IMPORTANT: Go to EmailJS Dashboard -> Email Templates -> Settings -> "To Email" and make sure it is set to {{to_email}}
     const templateParams = {
-      to_email: 'your_email@example.com', // <--- REPLACE THIS WITH YOUR EMAIL
+      to_email: 'support.clickinroom@gmail.com', // <--- REPLACE THIS WITH YOUR EMAIL
       customer_name: formData.name,
       customer_email: formData.email,
       customer_mobile: formData.phone,
