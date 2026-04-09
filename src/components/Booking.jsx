@@ -1,31 +1,11 @@
-import { useState, FormEvent, ChangeEvent } from 'react';
+import { useRef, useState, FormEvent } from 'react';
 import { Send, Loader2 } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 
-// Define the shape of our form data
-interface FormData {
-  name: string;
-  email: string;
-  phone: string;
-  hotelName: string;
-  service: string;
-  message: string;
-}
-
 const Booking = () => {
-  const [formData, setFormData] = useState<FormData>({
-    name: '',
-    email: '',
-    phone: '',
-    hotelName: '',
-    service: '',
-    message: ''
-  });
-
-  // Loading state to track submission
+  const formRef = useRef<HTMLFormElement | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  // EmailJS Configuration
   const SERVICE_ID = 'service_hu0fejb';
   const TEMPLATE_ID = 'template_4wtjpte';
   const PUBLIC_KEY = 'NSNP7QM8QEpLBGzy1';
@@ -49,69 +29,42 @@ const Booking = () => {
     'Travel & Concierge Services'
   ];
 
-  // Handle input changes
-  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-  };
-
-  // Handle form submission
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (!formRef.current) return;
+
     setIsLoading(true);
 
-    // Generate current time
-    const now = new Date();
-    const currentTime = now.toLocaleString('en-US', {
-      dateStyle: 'medium',
-      timeStyle: 'short',
-    });
-
-    // Prepare the parameters
-    const templateParams = {
-      to_email: 'support.clickinroom@gmail.com',
-      customer_name: formData.name,
-      customer_email: formData.email,
-      customer_mobile: formData.phone,
-      hotel_name: formData.hotelName,
-      service_type: formData.service,
-      message_content: formData.message,
-      current_time: currentTime,
-    };
-
-    console.log('Sending email with params:', templateParams);
-
     try {
-      // Send the email
-      const response = await emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams, PUBLIC_KEY);
-      
+      const response = await emailjs.sendForm(
+        SERVICE_ID,
+        TEMPLATE_ID,
+        formRef.current,
+        PUBLIC_KEY
+      );
+
       console.log('SUCCESS!', response.status, response.text);
       alert('Thank you! Your request has been received. We will contact you shortly.');
-      
-      // Reset form after submission
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        hotelName: '',
-        service: '',
-        message: ''
-      });
-    } catch (err) {
-      console.error('FAILED...', err);
-      alert('Failed to send the message. Please check the console for details.');
+      formRef.current.reset();
+    } catch (error) {
+      console.error('EMAILJS ERROR:', error);
+      alert('Email failed. Please open browser console and check the exact error.');
     } finally {
-      setIsLoading(false); // Stop loading
+      setIsLoading(false);
     }
   };
 
+  const currentTime = new Date().toLocaleString('en-US', {
+    dateStyle: 'medium',
+    timeStyle: 'short',
+  });
+
   return (
     <section className="py-24 relative overflow-hidden min-h-screen flex items-center justify-center">
-      {/* Background Gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-gray-900 via-black to-gray-800"></div>
 
       <div className="relative z-10 w-full max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
             <span className="text-white">Book Your</span>
@@ -122,79 +75,67 @@ const Booking = () => {
           </p>
         </div>
 
-        {/* Form Container */}
         <div className="glass-morphism rounded-xl p-8 md:p-12">
-          <form onSubmit={handleSubmit} className="space-y-6">
-            
-            {/* Name */}
+          <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
+            {/* Hidden fields for EmailJS */}
+            <input type="hidden" name="to_email" value="support.clickinroom@gmail.com" />
+            <input type="hidden" name="current_time" value={currentTime} />
+
             <div>
               <label className="block text-gray-300 mb-2 font-medium">Your Name *</label>
               <input
                 type="text"
-                name="name"
+                name="customer_name"
                 placeholder="John Doe"
-                value={formData.name}
-                onChange={handleChange}
                 required
                 className="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-yellow-400 transition-colors"
               />
             </div>
 
-            {/* Email */}
             <div>
               <label className="block text-gray-300 mb-2 font-medium">Email Address *</label>
               <input
                 type="email"
-                name="email"
+                name="customer_email"
                 placeholder="john@example.com"
-                value={formData.email}
-                onChange={handleChange}
                 required
                 className="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-yellow-400 transition-colors"
               />
             </div>
 
-            {/* Phone */}
             <div>
               <label className="block text-gray-300 mb-2 font-medium">Phone Number *</label>
               <input
                 type="tel"
-                name="phone"
+                name="customer_mobile"
                 placeholder="+91 98765 43210"
-                value={formData.phone}
-                onChange={handleChange}
                 required
                 className="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-yellow-400 transition-colors"
               />
             </div>
 
-            {/* Hotel Name */}
             <div>
               <label className="block text-gray-300 mb-2 font-medium">Hotel Name</label>
               <input
                 type="text"
-                name="hotelName"
+                name="hotel_name"
                 placeholder="Your Hotel Name"
-                value={formData.hotelName}
-                onChange={handleChange}
                 className="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-yellow-400 transition-colors"
               />
             </div>
 
-            {/* Service Interested In */}
             <div>
               <label className="block text-gray-300 mb-2 font-medium">Service Interested In *</label>
               <select
-                name="service"
-                value={formData.service}
-                onChange={handleChange}
+                name="service_type"
                 required
+                defaultValue=""
                 className="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-yellow-400 transition-colors appearance-none cursor-pointer"
-                style={{ 
-                  backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='white'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`, 
-                  backgroundRepeat: 'no-repeat', 
-                  backgroundPosition: 'right 1rem center', 
-                  backgroundSize: '1.5em' 
+                style={{
+                  backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='white'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
+                  backgroundRepeat: 'no-repeat',
+                  backgroundPosition: 'right 1rem center',
+                  backgroundSize: '1.5em'
                 }}
               >
                 <option value="" disabled>Select a service</option>
@@ -206,20 +147,16 @@ const Booking = () => {
               </select>
             </div>
 
-            {/* Message */}
             <div>
               <label className="block text-gray-300 mb-2 font-medium">Message</label>
               <textarea
-                name="message"
+                name="message_content"
                 rows={4}
                 placeholder="Tell us about your project..."
-                value={formData.message}
-                onChange={handleChange}
                 className="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-yellow-400 transition-colors resize-none"
               ></textarea>
             </div>
 
-            {/* Submit Button */}
             <button
               type="submit"
               disabled={isLoading}
