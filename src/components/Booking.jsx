@@ -77,27 +77,17 @@ const Booking = () => {
     };
 
     // Send the email
-    emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams, PUBLIC_KEY)
-      .then((response) => {
-        console.log('SUCCESS!', response.status, response.text);
-        alert('Thank you! Your request has been received. We will contact you shortly.');
-        
-        // Reset form after submission
-        setFormData({
-          name: '',
-          email: '',
-          phone: '',
-          hotelName: '',
-          service: '',
-          message: ''
-        });
-      })
-      .catch((err) => {
-        console.error('FAILED...', err);
-        alert('Failed to send the message. Please check your connection and try again.');
-      });
-  };
-
+    // Inside handleSubmit
+emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams, PUBLIC_KEY)
+  .then((response) => {
+    console.log('SUCCESS!', response.status, response.text);
+    alert('Message sent successfully!');
+    // Reset form...
+  })
+  .catch((err) => {
+    console.error('FULL ERROR:', err); // Check this in Console if it fails
+    alert(`Failed to send: ${err.text || 'Check console for details'}`);
+  });
   return (
     <section className="py-24 relative overflow-hidden min-h-screen flex items-center justify-center">
       {/* Background Gradient */}
