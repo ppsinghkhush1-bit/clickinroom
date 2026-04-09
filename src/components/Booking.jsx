@@ -77,8 +77,6 @@ const Booking = () => {
 
         <div className="glass-morphism rounded-xl p-8 md:p-12">
           <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
-            {/* Hidden fields for EmailJS */}
-            <input type="hidden" name="to_email" value="support.clickinroom@gmail.com" />
             <input type="hidden" name="current_time" value={currentTime} />
 
             <div>
