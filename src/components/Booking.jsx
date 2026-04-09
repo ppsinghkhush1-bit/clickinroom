@@ -2,6 +2,7 @@ import { useState, FormEvent, ChangeEvent } from 'react';
 import { Send, Loader2 } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 
+// Define the shape of our form data
 interface FormData {
   name: string;
   email: string;
@@ -21,10 +22,10 @@ const Booking = () => {
     message: ''
   });
 
+  // Loading state to track submission
   const [isLoading, setIsLoading] = useState(false);
 
   // EmailJS Configuration
-  // ⚠️ DOUBLE CHECK THESE IDs IN YOUR DASHBOARD
   const SERVICE_ID = 'service_hu0fejb';
   const TEMPLATE_ID = 'template_4wtjpte';
   const PUBLIC_KEY = 'NSNP7QM8QEpLBGzy1';
@@ -48,26 +49,27 @@ const Booking = () => {
     'Travel & Concierge Services'
   ];
 
+  // Handle input changes
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  // Handle form submission
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
-    // Generate time
+    // Generate current time
     const now = new Date();
     const currentTime = now.toLocaleString('en-US', {
       dateStyle: 'medium',
       timeStyle: 'short',
     });
 
-    // Send parameters - SIMPLE VERSION
+    // Prepare the parameters
     const templateParams = {
-      to_email: 'ppsinghkhush1@gmail.com', // YOUR ACTUAL EMAIL
-      from_name: 'Hotel Booking Website',
+      to_email: 'support.clickinroom@gmail.com',
       customer_name: formData.name,
       customer_email: formData.email,
       customer_mobile: formData.phone,
@@ -77,37 +79,39 @@ const Booking = () => {
       current_time: currentTime,
     };
 
-    console.log('Sending...', templateParams);
+    console.log('Sending email with params:', templateParams);
 
-    emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams, PUBLIC_KEY)
-      .then((response) => {
-        console.log('SUCCESS!', response);
-        alert('Message sent successfully!');
-        
-        // Reset form
-        setFormData({
-          name: '',
-          email: '',
-          phone: '',
-          hotelName: '',
-          service: '',
-          message: ''
-        });
-      })
-      .catch((error) => {
-        console.error('ERROR:', error);
-        alert('Failed to send. Check console for details.');
-      })
-      .finally(() => {
-        setIsLoading(false);
+    try {
+      // Send the email
+      const response = await emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams, PUBLIC_KEY);
+      
+      console.log('SUCCESS!', response.status, response.text);
+      alert('Thank you! Your request has been received. We will contact you shortly.');
+      
+      // Reset form after submission
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        hotelName: '',
+        service: '',
+        message: ''
       });
+    } catch (err) {
+      console.error('FAILED...', err);
+      alert('Failed to send the message. Please check the console for details.');
+    } finally {
+      setIsLoading(false); // Stop loading
+    }
   };
 
   return (
     <section className="py-24 relative overflow-hidden min-h-screen flex items-center justify-center">
+      {/* Background Gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-gray-900 via-black to-gray-800"></div>
 
       <div className="relative z-10 w-full max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Header */}
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
             <span className="text-white">Book Your</span>
@@ -118,9 +122,11 @@ const Booking = () => {
           </p>
         </div>
 
+        {/* Form Container */}
         <div className="glass-morphism rounded-xl p-8 md:p-12">
           <form onSubmit={handleSubmit} className="space-y-6">
             
+            {/* Name */}
             <div>
               <label className="block text-gray-300 mb-2 font-medium">Your Name *</label>
               <input
@@ -134,6 +140,7 @@ const Booking = () => {
               />
             </div>
 
+            {/* Email */}
             <div>
               <label className="block text-gray-300 mb-2 font-medium">Email Address *</label>
               <input
@@ -147,6 +154,7 @@ const Booking = () => {
               />
             </div>
 
+            {/* Phone */}
             <div>
               <label className="block text-gray-300 mb-2 font-medium">Phone Number *</label>
               <input
@@ -160,6 +168,7 @@ const Booking = () => {
               />
             </div>
 
+            {/* Hotel Name */}
             <div>
               <label className="block text-gray-300 mb-2 font-medium">Hotel Name</label>
               <input
@@ -172,6 +181,7 @@ const Booking = () => {
               />
             </div>
 
+            {/* Service Interested In */}
             <div>
               <label className="block text-gray-300 mb-2 font-medium">Service Interested In *</label>
               <select
@@ -196,6 +206,7 @@ const Booking = () => {
               </select>
             </div>
 
+            {/* Message */}
             <div>
               <label className="block text-gray-300 mb-2 font-medium">Message</label>
               <textarea
@@ -208,6 +219,7 @@ const Booking = () => {
               ></textarea>
             </div>
 
+            {/* Submit Button */}
             <button
               type="submit"
               disabled={isLoading}
