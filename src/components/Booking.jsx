@@ -27,7 +27,7 @@ const Booking = () => {
 
   // EmailJS Configuration
   const SERVICE_ID = 'service_hu0fejb';
-  const TEMPLATE_ID = 'template_4wtjpte';
+  const TEMPLATE_ID = 'zjb3qql';
   const PUBLIC_KEY = 'NSNP7QM8QEpLBGzy1';
 
   const services = [
