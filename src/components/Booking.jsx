@@ -56,9 +56,20 @@ const Booking = () => {
   };
 
   // Handle form submission
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
+ const handleSubmit = (e: FormEvent) => {
+  e.preventDefault();
+  console.log("Attempting to send with params:", templateParams); // LOG 1
+  setIsLoading(true);
+
+  emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams, PUBLIC_KEY)
+    .then((response) => {
+      console.log('SUCCESS!', response.status, response.text); // LOG 2
+      alert('Sent!');
+    })
+    .catch((err) => {
+      console.error('DETAILED ERROR:', err); // LOG 3
+    });
+};
 
     // Generate current time
     const now = new Date();
