@@ -58,7 +58,7 @@ const Booking = () => {
   // Handle form submission
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    setIsLoading(true); // Start loading
+    setIsLoading(true);
 
     // Generate current time
     const now = new Date();
@@ -70,14 +70,13 @@ const Booking = () => {
     // Prepare the parameters
     // to_email ensures it sends to your specific address
     const templateParams = {
-      to_email: 'support.clickinroom@gmail.com', 
-      reply_to: formData.email,
+      // These keys MUST match the {{key}} in your dashboard template
       customer_name: formData.name,
       customer_email: formData.email,
       customer_mobile: formData.phone,
       hotel_name: formData.hotelName,
       service_type: formData.service,
-      message_content: formData.message,
+      message_content: formData.message, // Ensure {{message_content}} is in your template body!
       current_time: currentTime,
     };
 
