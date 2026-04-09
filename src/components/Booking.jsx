@@ -56,20 +56,9 @@ const Booking = () => {
   };
 
   // Handle form submission
- const handleSubmit = (e: FormEvent) => {
-  e.preventDefault();
-  console.log("Attempting to send with params:", templateParams); // LOG 1
-  setIsLoading(true);
-
-  emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams, PUBLIC_KEY)
-    .then((response) => {
-      console.log('SUCCESS!', response.status, response.text); // LOG 2
-      alert('Sent!');
-    })
-    .catch((err) => {
-      console.error('DETAILED ERROR:', err); // LOG 3
-    });
-};
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
 
     // Generate current time
     const now = new Date();
@@ -78,16 +67,14 @@ const Booking = () => {
       timeStyle: 'short',
     });
 
-    // Prepare the parameters
-    // to_email ensures it sends to your specific address
+    // Prepare the parameters to match your HTML template variables
     const templateParams = {
-      // These keys MUST match the {{key}} in your dashboard template
       customer_name: formData.name,
       customer_email: formData.email,
       customer_mobile: formData.phone,
       hotel_name: formData.hotelName,
       service_type: formData.service,
-      message_content: formData.message, // Ensure {{message_content}} is in your template body!
+      message_content: formData.message,
       current_time: currentTime,
     };
 
