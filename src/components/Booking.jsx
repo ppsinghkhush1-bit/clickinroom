@@ -77,8 +77,9 @@ const Booking = () => {
 
         <div className="glass-morphism rounded-xl p-8 md:p-12">
           <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
+            {/* Hidden fields that match your EmailJS template exactly */}
             <input type="hidden" name="current_time" value={currentTime} />
-
+            
             <div>
               <label className="block text-gray-300 mb-2 font-medium">Your Name *</label>
               <input
