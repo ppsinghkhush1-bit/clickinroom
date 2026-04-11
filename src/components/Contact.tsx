@@ -1,51 +1,39 @@
-import { useState, FormEvent } from 'react';
+import { useState, useRef, FormEvent } from 'react';
 import { Send, Phone, Mail, MapPin, CheckCircle } from 'lucide-react';
+import emailjs from '@emailjs/browser';
 
 const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    hotelName: '',
-    service: '',
-    message: '',
-  });
-
-  const [submitted, setSubmitted] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+
+  const SERVICE_ID  = import.meta.env.VITE_EMAILJS_SERVICE_ID  as string;
+  const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID as string;
+  const PUBLIC_KEY  = import.meta.env.VITE_EMAILJS_PUBLIC_KEY  as string;
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!formRef.current) return;
+
+    if (!SERVICE_ID || !TEMPLATE_ID || !PUBLIC_KEY) {
+      alert('❌ Email config missing. Check Railway Variables.');
+      return;
+    }
+
     setIsSubmitting(true);
-
-    // Simulate API call
-    console.log('Form submitted:', formData);
-    
-    // Fake delay for realistic feel
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
-    setSubmitted(true);
-    
-    setTimeout(() => {
-      setSubmitted(false);
+    try {
+      await emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, formRef.current, PUBLIC_KEY);
+      setSubmitted(true);
+      setTimeout(() => {
+        setSubmitted(false);
+        formRef.current?.reset();
+      }, 3000);
+    } catch (error: any) {
+      console.error('EmailJS Error:', error);
+      alert(`❌ Send failed (${error?.text ?? 'unknown'}). Call +91 75086 39613`);
+    } finally {
       setIsSubmitting(false);
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        hotelName: '',
-        service: '',
-        message: '',
-      });
-    }, 3000);
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const target = e.target as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
-    setFormData({
-      ...formData,
-      [target.name]: target.value,
-    });
+    }
   };
 
   return (
@@ -59,7 +47,6 @@ const Contact = () => {
               Get In Touch
             </span>
           </div>
-
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
             <span className="bg-gradient-to-r from-amber-200 via-yellow-100 to-amber-200 bg-clip-text text-transparent">
               Let's Transform
@@ -67,7 +54,6 @@ const Contact = () => {
             <br />
             <span className="text-stone-100">Your Hotel Business</span>
           </h2>
-
           <p className="text-stone-400 text-lg max-w-2xl mx-auto">
             Book a free consultation and discover how we can help you achieve your goals
           </p>
@@ -85,17 +71,14 @@ const Contact = () => {
                   </p>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-6">
+                // ✅ formRef attached here — EmailJS reads input name="" attributes directly
+                <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <label className="block text-sm font-medium text-stone-300 mb-2">
-                        Your Name *
-                      </label>
+                      <label className="block text-sm font-medium text-stone-300 mb-2">Your Name *</label>
                       <input
                         type="text"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
+                        name="customer_name"   // ✅ matches EmailJS template variable
                         required
                         disabled={isSubmitting}
                         className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-stone-100 placeholder-stone-500 focus:outline-none focus:border-amber-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
@@ -103,14 +86,10 @@ const Contact = () => {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-stone-300 mb-2">
-                        Email Address *
-                      </label>
+                      <label className="block text-sm font-medium text-stone-300 mb-2">Email Address *</label>
                       <input
                         type="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
+                        name="customer_email"  // ✅ matches EmailJS template variable
                         required
                         disabled={isSubmitting}
                         className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-stone-100 placeholder-stone-500 focus:outline-none focus:border-amber-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
@@ -121,14 +100,10 @@ const Contact = () => {
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <label className="block text-sm font-medium text-stone-300 mb-2">
-                        Phone Number *
-                      </label>
+                      <label className="block text-sm font-medium text-stone-300 mb-2">Phone Number *</label>
                       <input
                         type="tel"
-                        name="phone"
-                        value={formData.phone}
-                        onChange={handleChange}
+                        name="customer_mobile" // ✅ matches EmailJS template variable
                         required
                         disabled={isSubmitting}
                         className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-stone-100 placeholder-stone-500 focus:outline-none focus:border-amber-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
@@ -136,14 +111,10 @@ const Contact = () => {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-stone-300 mb-2">
-                        Hotel Name
-                      </label>
+                      <label className="block text-sm font-medium text-stone-300 mb-2">Hotel Name</label>
                       <input
                         type="text"
-                        name="hotelName"
-                        value={formData.hotelName}
-                        onChange={handleChange}
+                        name="hotel_name"      // ✅ matches EmailJS template variable
                         disabled={isSubmitting}
                         className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-stone-100 placeholder-stone-500 focus:outline-none focus:border-amber-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                         placeholder="Your Hotel Name"
@@ -152,13 +123,9 @@ const Contact = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-stone-300 mb-2">
-                      Service Interested In *
-                    </label>
+                    <label className="block text-sm font-medium text-stone-300 mb-2">Service Interested In *</label>
                     <select
-                      name="service"
-                      value={formData.service}
-                      onChange={handleChange}
+                      name="service_type"     // ✅ matches EmailJS template variable
                       required
                       disabled={isSubmitting}
                       className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-stone-100 focus:outline-none focus:border-amber-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed appearance-none cursor-pointer"
@@ -176,19 +143,18 @@ const Contact = () => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-stone-300 mb-2">
-                      Message
-                    </label>
+                    <label className="block text-sm font-medium text-stone-300 mb-2">Message</label>
                     <textarea
-                      name="message"
-                      value={formData.message}
-                      onChange={handleChange}
+                      name="message_content"  // ✅ matches EmailJS template variable
                       rows={4}
                       disabled={isSubmitting}
                       className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-stone-100 placeholder-stone-500 focus:outline-none focus:border-amber-200 transition-colors resize-none disabled:opacity-50 disabled:cursor-not-allowed"
                       placeholder="Tell us about your project..."
                     />
                   </div>
+
+                  {/* Hidden field for timestamp */}
+                  <input type="hidden" name="current_time" value={new Date().toLocaleString()} />
 
                   <button
                     type="submit"
@@ -203,7 +169,7 @@ const Contact = () => {
             </div>
           </div>
 
-          {/* Contact Info - UNCHANGED */}
+          {/* Contact Info — unchanged */}
           <div className="space-y-8">
             <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8">
               <h3 className="text-2xl font-bold text-stone-100 mb-6">Contact Information</h3>
@@ -215,28 +181,20 @@ const Contact = () => {
                   <div>
                     <div className="text-sm text-stone-400 mb-1">Phone</div>
                     <div className="space-y-1">
-                      <a href="tel:+917508639613" className="block text-lg font-semibold text-stone-100 hover:text-amber-200 transition-colors">
-                        +91 75086 39613
-                      </a>
-                      <a href="tel:+917710584886" className="block text-lg font-semibold text-stone-100 hover:text-amber-200 transition-colors">
-                        +91 77105 84886
-                      </a>
+                      <a href="tel:+917508639613" className="block text-lg font-semibold text-stone-100 hover:text-amber-200 transition-colors">+91 75086 39613</a>
+                      <a href="tel:+917710584886" className="block text-lg font-semibold text-stone-100 hover:text-amber-200 transition-colors">+91 77105 84886</a>
                     </div>
                   </div>
                 </div>
-
                 <div className="flex items-start space-x-4 hover:scale-[1.02] transition-transform duration-200">
                   <div className="w-12 h-12 bg-gradient-to-br from-amber-200 to-yellow-300 rounded-lg flex items-center justify-center flex-shrink-0">
                     <Mail className="w-6 h-6 text-stone-900" />
                   </div>
                   <div>
                     <div className="text-sm text-stone-400 mb-1">Email</div>
-                    <a href="mailto:support.clickinroom@gmail.com" className="text-lg font-semibold text-stone-100 hover:text-amber-200 transition-colors">
-                      support.clickinroom@gmail.com
-                    </a>
+                    <a href="mailto:support.clickinroom@gmail.com" className="text-lg font-semibold text-stone-100 hover:text-amber-200 transition-colors">support.clickinroom@gmail.com</a>
                   </div>
                 </div>
-
                 <div className="flex items-start space-x-4 hover:scale-[1.02] transition-transform duration-200">
                   <div className="w-12 h-12 bg-gradient-to-br from-amber-200 to-yellow-300 rounded-lg flex items-center justify-center flex-shrink-0">
                     <MapPin className="w-6 h-6 text-stone-900" />
@@ -276,7 +234,7 @@ const Contact = () => {
               <p className="text-stone-300 mb-6">
                 Schedule a free 30-minute consultation to discuss your hotel's digital transformation.
               </p>
-              <a
+              
                 href="tel:+917508639613"
                 className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-amber-200 to-yellow-300 text-stone-900 font-bold rounded-lg hover:shadow-2xl hover:scale-[1.05] transition-all duration-300 group"
               >
