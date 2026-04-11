@@ -1,42 +1,51 @@
-import { useState } from 'react';
-import { Send, Phone, Mail, MapPin, CheckCircle } from 'lucide-react';
+import { useRef, useState, FormEvent } from 'react';
+import { Send, Phone, Mail, MapPin, CheckCircle, Loader2 } from 'lucide-react';
+import emailjs from '@emailjs/browser';
 
 const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    hotelName: '',
-    service: '',
-    message: '',
-  });
-
+  const formRef = useRef<HTMLFormElement | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Simulating form submission
-    console.log('Form submitted:', formData);
-    setSubmitted(true);
-    
-    setTimeout(() => {
-      setSubmitted(false);
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        hotelName: '',
-        service: '',
-        message: '',
-      });
-    }, 3000);
-  };
+  const SERVICE_ID = 'service_hu0fejb';
+  const TEMPLATE_ID = 'template_4wtjpte';
+  const PUBLIC_KEY = 'NSNP7QM8QEpLBGzy1';
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+  const currentTime = new Date().toLocaleString('en-US', {
+    dateStyle: 'medium',
+    timeStyle: 'short',
+  });
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!formRef.current) return;
+
+    setIsLoading(true);
+
+    try {
+      const response = await emailjs.sendForm(
+        SERVICE_ID,
+        TEMPLATE_ID,
+        formRef.current,
+        PUBLIC_KEY
+      );
+
+      console.log('✅ SUCCESS!', response.status, response.text);
+      setSubmitted(true);
+      
+      // Reset form after 3 seconds
+      setTimeout(() => {
+        setSubmitted(false);
+        setIsLoading(false);
+        if (formRef.current) formRef.current.reset();
+      }, 3000);
+      
+    } catch (error) {
+      console.error('❌ EMAILJS ERROR:', error);
+      alert('Email failed. Please check console for details.');
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -74,7 +83,10 @@ const Contact = () => {
                   </p>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
+                  {/* Hidden field for EmailJS template */}
+                  <input type="hidden" name="current_time" value={currentTime} />
+
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                       <label className="block text-sm font-medium text-stone-300 mb-2">
@@ -82,9 +94,7 @@ const Contact = () => {
                       </label>
                       <input
                         type="text"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
+                        name="customer_name"
                         required
                         className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-stone-100 placeholder-stone-500 focus:outline-none focus:border-amber-200 transition-colors"
                         placeholder="John Doe"
@@ -96,9 +106,7 @@ const Contact = () => {
                       </label>
                       <input
                         type="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
+                        name="customer_email"
                         required
                         className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-stone-100 placeholder-stone-500 focus:outline-none focus:border-amber-200 transition-colors"
                         placeholder="john@example.com"
@@ -113,9 +121,7 @@ const Contact = () => {
                       </label>
                       <input
                         type="tel"
-                        name="phone"
-                        value={formData.phone}
-                        onChange={handleChange}
+                        name="customer_mobile"
                         required
                         className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-stone-100 placeholder-stone-500 focus:outline-none focus:border-amber-200 transition-colors"
                         placeholder="+91 98765 43210"
@@ -127,9 +133,7 @@ const Contact = () => {
                       </label>
                       <input
                         type="text"
-                        name="hotelName"
-                        value={formData.hotelName}
-                        onChange={handleChange}
+                        name="hotel_name"
                         className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-stone-100 placeholder-stone-500 focus:outline-none focus:border-amber-200 transition-colors"
                         placeholder="Your Hotel Name"
                       />
@@ -141,20 +145,24 @@ const Contact = () => {
                       Service Interested In *
                     </label>
                     <select
-                      name="service"
-                      value={formData.service}
-                      onChange={handleChange}
+                      name="service_type"
                       required
-                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-stone-100 focus:outline-none focus:border-amber-200 transition-colors"
+                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-stone-100 focus:outline-none focus:border-amber-200 transition-colors appearance-none cursor-pointer"
+                      style={{
+                        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
+                        backgroundRepeat: 'no-repeat',
+                        backgroundPosition: 'right 1rem center',
+                        backgroundSize: '1.5em'
+                      }}
                     >
-                      <option value="" className="bg-stone-900">Select a service</option>
-                      <option value="website" className="bg-stone-900">Hotel Website Development</option>
-                      <option value="seo" className="bg-stone-900">Hotel SEO</option>
-                      <option value="digital-marketing" className="bg-stone-900">Digital Marketing</option>
-                      <option value="social-media" className="bg-stone-900">Social Media Marketing</option>
-                      <option value="photography" className="bg-stone-900">Hotel Photography</option>
-                      <option value="booking-engine" className="bg-stone-900">Booking Engine</option>
-                      <option value="other" className="bg-stone-900">Other Services</option>
+                      <option value="" disabled>Select a service</option>
+                      <option value="Hotel Website Development">Hotel Website Development</option>
+                      <option value="Hotel SEO">Hotel SEO</option>
+                      <option value="Hotel Digital Marketing">Hotel Digital Marketing</option>
+                      <option value="Social Media Marketing">Social Media Marketing</option>
+                      <option value="Google Business Management">Google Business Management</option>
+                      <option value="Hotel Photography">Hotel Photography</option>
+                      <option value="Hotel Booking Engine">Hotel Booking Engine</option>
                     </select>
                   </div>
 
@@ -163,9 +171,7 @@ const Contact = () => {
                       Message
                     </label>
                     <textarea
-                      name="message"
-                      value={formData.message}
-                      onChange={handleChange}
+                      name="message_content"
                       rows={4}
                       className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-stone-100 placeholder-stone-500 focus:outline-none focus:border-amber-200 transition-colors resize-none"
                       placeholder="Tell us about your project..."
@@ -174,16 +180,27 @@ const Contact = () => {
 
                   <button
                     type="submit"
-                    className="w-full px-8 py-4 bg-gradient-to-r from-amber-200 to-yellow-300 text-stone-900 font-bold rounded-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 flex items-center justify-center space-x-2"
+                    disabled={isLoading}
+                    className="w-full px-8 py-4 bg-gradient-to-r from-amber-200 to-yellow-300 text-stone-900 font-bold rounded-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    <span>Send Message</span>
-                    <Send className="w-5 h-5" />
+                    {isLoading ? (
+                      <>
+                        <Loader2 className="w-5 h-5 animate-spin" />
+                        <span>Sending...</span>
+                      </>
+                    ) : (
+                      <>
+                        <span>Send Message</span>
+                        <Send className="w-5 h-5" />
+                      </>
+                    )}
                   </button>
                 </form>
               )}
             </div>
           </div>
 
+          {/* Contact Info Section - UNCHANGED */}
           <div className="space-y-8">
             <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8">
               <h3 className="text-2xl font-bold text-stone-100 mb-6">Contact Information</h3>
