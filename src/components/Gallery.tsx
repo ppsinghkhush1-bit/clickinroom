@@ -105,6 +105,23 @@ const Gallery = () => {
         '/nirvana/n9.jpg',
       ],
     },
+    {
+      id: 6,
+      name: 'Luxury Stay Paradise, Solan',
+      mainImage: '/paradise/p1.jpeg',
+      gallery: [
+        '/paradise/p1.jpeg',
+        '/paradise/p10.jpg',
+        '/paradise/p2.jpeg',
+        '/paradise/p3.jpeg',
+        '/paradise/p4.jpeg',
+        '/paradise/p5.jpeg',
+        '/paradise/p6.jpeg',
+        '/paradise/p7.jpeg',
+        '/paradise/p8.jpeg',
+        '/paradise/p9.jpeg',
+      ],
+    },
   ];
 
   const openLightbox = (hotel: any) => {
