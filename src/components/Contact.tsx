@@ -138,7 +138,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <div className="text-sm text-stone-400 mb-1">Address</div>
-                    <p className="text-lg font-semibold text-stone-100 leading-relaxed">Hotel Green Garden<br />Opp. Govt. ITI College, Civil Lines<br />Ludhiana, Punjab 141001</p>
+                    <p className="text-lg font-semibold text-stone-100 leading-relaxed">Tajpur Rd, Opp. HDFC Bank<br />Guru Ram Das Nagar, Bhamian Khurd<br />Ludhiana, Punjab 141008</p>
                   </div>
                 </div>
               </div>
