@@ -88,6 +88,23 @@ const Gallery = () => {
         '/family/f9.jpeg',
       ],
     },
+    {
+      id: 5,
+      name: 'Nirvana Luxury Stage, Solan',
+      mainImage: '/nirvana/n1.jpeg',
+      gallery: [
+        '/nirvana/n1.jpeg',
+        '/nirvana/n10.jpeg',
+        '/nirvana/n2.jpeg',
+        '/nirvana/n3.jpeg',
+        '/nirvana/n4.jpeg',
+        '/nirvana/n5.jpeg',
+        '/nirvana/n6.jpeg',
+        '/nirvana/n7.jpeg',
+        '/nirvana/n8.jpeg',
+        '/nirvana/n9.jpg',
+      ],
+    },
   ];
 
   const openLightbox = (hotel: any) => {
